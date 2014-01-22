@@ -39,6 +39,9 @@ const int LOGO_SCHISM_Y = 0;
 const int UNIT_X = 180;
 const int UNIT_Y = 180;
 
+SDL_Surface* screen = NULL;
+SDL_Event event;
+
 /**
  * Loading image into SDL
  * @param filename image file
@@ -75,7 +78,7 @@ int showImage(SDL_Surface* screen, int x, int y, const char* filename)
  
     SDL_Surface* logo = NULL;
  
-    logo = IMG_Load(filename);
+    logo = loadImage(filename);
     SDL_BlitSurface(logo, NULL, screen, &offset);
     SDL_FreeSurface(logo);
 
@@ -106,24 +109,47 @@ int showLogo(SDL_Surface* screen, int x, int y, const char* filename, const int 
     return 0;   
 }
 
-/*
- * 
+/**
+ * Initializing SDL
+ * @return initialized
  */
-int main(int argc, char** argv) {
-    SDL_Surface* screen     = NULL;
-
-    // Iitialization SDL
+int init()
+{
     if(SDL_Init(SDL_INIT_EVERYTHING) == -1)
     {
-        return 1;
+        return false;
     }
     screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
     if(!screen)
     {
-        return 1;
+        return false;
     }
     SDL_WM_SetCaption(WM_CAPTION, NULL);
+    
+    return true;
+}
 
+/**
+ * Finalization SDL
+ * @return finalized
+ */
+int finalize()
+{
+    SDL_Quit();
+    return true;
+}
+
+/*
+ * 
+ */
+int main(int argc, char** argv) {
+    bool quit = false;
+    
+    if(!init())
+    {
+        return  1;
+    }
+    
     // Showing logos
     showLogo(screen, LOGO_FIREBALL_X, LOGO_FIREBALL_Y, LOGO_FIREBALL, DELAY_FIREBALL);
     showLogo(screen, LOGO_SDL_X,      LOGO_SDL_Y,      LOGO_SDL,      DELAY_SDL     );
@@ -136,10 +162,18 @@ int main(int argc, char** argv) {
     {
         return 1;
     }
-    SDL_Delay(DELAY_MAIN);
+    while(!quit)
+    {
+        while(SDL_PollEvent(&event))
+        {
+            if(event.type == SDL_QUIT)
+            {
+                quit =  true;
+            }
+        }
+    }
 
-    // Finalization
-    SDL_Quit();
+    finalize();
     
     return 0;
 }
