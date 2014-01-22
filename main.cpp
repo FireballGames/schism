@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
 
 using namespace std;
 
@@ -25,7 +26,7 @@ const char* WM_CAPTION  = "Схизма";
 const char* LOGO_FIREBALL = "images/logo_fireball.bmp";
 const char* LOGO_SDL      = "images/logo_sdl.bmp";
 const char* LOGO_SCHISM   = "images/logo_schism.bmp";
-const char* IMG_UNIT       = "images/unit.bmp";
+const char* IMG_UNIT       = "images/unit.gif";
 const char* IMG_BACKGROUND = "images/background.bmp";
 
 const int LOGO_FIREBALL_X = 0;
@@ -48,7 +49,7 @@ SDL_Surface* loadImage(const char* filename)
     SDL_Surface* loaded_image    = NULL;
     SDL_Surface* optimized_image = NULL;
     
-    loaded_image = SDL_LoadBMP(filename);
+    loaded_image = IMG_Load(filename);
     if(loaded_image != NULL)
     {
         optimized_image = SDL_DisplayFormat(loaded_image);
@@ -74,7 +75,7 @@ int showImage(SDL_Surface* screen, int x, int y, const char* filename)
  
     SDL_Surface* logo = NULL;
  
-    logo = SDL_LoadBMP(filename);
+    logo = IMG_Load(filename);
     SDL_BlitSurface(logo, NULL, screen, &offset);
     SDL_FreeSurface(logo);
 
