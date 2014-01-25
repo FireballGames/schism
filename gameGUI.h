@@ -9,9 +9,12 @@
 #define	GAMEGUI_H
 
 #include "SDLgraph.h"
+#include "map.h"
 
 class gameGUI {
 public:
+    map* m;
+    
     gameGUI();
     gameGUI(const gameGUI& orig);
     virtual ~gameGUI();

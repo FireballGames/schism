@@ -22,7 +22,7 @@ int main(int argc, char** argv) {
     gui = new gameGUI;
     
     if(gui->initialize() < 0){
-        printf("Initialization error");
+        printf("Initialization error\n");
         return 1;
     }
     

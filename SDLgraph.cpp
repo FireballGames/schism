@@ -6,8 +6,12 @@
  */
 
 #include "SDLgraph.h"
+#include "D2SDL/D2SDLimage.h"
+#include "D2SDL/D2SDLminimap.h"
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <cstdlib>
 
 const int SCREEN_WIDTH  = 800;
 const int SCREEN_HEIGHT = 600;
@@ -16,7 +20,8 @@ const int SCREEN_BPP    = 32;
 const char* WM_CAPTION  = "Схизма";
 
 SDLgraph::SDLgraph() {
-    screen = NULL;
+    screen  = NULL;
+    minimap = NULL;
 }
 
 SDLgraph::SDLgraph(const SDLgraph& orig) {
@@ -30,17 +35,24 @@ SDLgraph::~SDLgraph() {
  * @return initialized
  */
 int SDLgraph::initialize() {
+    printf("SDL initialization\n");
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
-        printf("SDL init error: %s",  SDL_GetError());
         return -1;
     }
+    
     screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
     if(!screen)
     {
-        printf("SDL mode error: %s",  SDL_GetError());
         return -2;
     }
+    
+    minimap = new D2SDLminimap;
+    if(minimap->initialize() < 0)
+    {
+        return -2;
+    }
+    
     SDL_WM_SetCaption(WM_CAPTION, NULL);
     
     return 0;
@@ -51,48 +63,34 @@ int SDLgraph::initialize() {
  * @return finalized
  */
 int SDLgraph::finalize() {
+    printf("SDL finalization\n");
+    minimap->finalize();
     SDL_Quit();
     return 0;
 }
 
-/**
- * Loading image into SDL
- * @param filename image file
- * @return optimized image
- */
-SDL_Surface* SDLgraph::loadImage(const char* filename)
-{
-    SDL_Surface* loaded_image    = NULL;
-    SDL_Surface* optimized_image = NULL;
-    
-    loaded_image = IMG_Load(filename);
-    if(loaded_image != NULL)
-    {
-        optimized_image = SDL_DisplayFormat(loaded_image);
-        SDL_FreeSurface(loaded_image);
-    }
-    
-    return optimized_image;
+char* SDLgraph::getError() {
+    return SDL_GetError();
 }
 
 /**
- * Showing image
+ * Filling image
  * @param x horizontal position
  * @param y vertical position
  * @param filename filename of the image
  * @return errorcode
  */
-int SDLgraph::showImage(int x, int y, const char* filename)
+int SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename)
 {
     SDL_Rect offset;
     offset.x = x;
     offset.y = y;
- 
-    SDL_Surface* logo = NULL;
- 
-    logo = loadImage(filename);
-    SDL_BlitSurface(logo, NULL, screen, &offset);
-    SDL_FreeSurface(logo);
+
+    D2SDLimage* src = NULL;
+    
+    src = new D2SDLimage(filename);
+    SDL_BlitSurface(src->image, NULL, dest, &offset);
+    src->free();
 
     return 0;   
 }
@@ -106,10 +104,12 @@ int SDLgraph::showImage(int x, int y, const char* filename)
  * @param delay time to show logo
  * @return errorcode
  */
-int SDLgraph::showLogo(int x, int y, const char* filename, const int delay)
+int SDLgraph::showLogo(const char* filename, const int delay)
 {
-    showImage(x, y, filename);
-    return flip();   
+    fillImage(screen, 0, 0, filename);
+    int res = flip();
+    SDL_Delay(delay);
+    return res;
 }
 
 int SDLgraph::flip()
