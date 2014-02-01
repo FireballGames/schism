@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   main.cpp
  * Author: d2emon
  *
@@ -14,18 +14,16 @@ using namespace std;
 gameGUI* gui = NULL;
 
 /*
- * 
+ *
  */
 int main(int argc, char** argv) {
-    bool quit = false;
-    
     gui = new gameGUI;
-    
+
     if(gui->initialize() < 0){
         printf("Initialization error\n");
         return 1;
     }
-    
+
     if(gui->title() < 0){
         printf("Title error");
         return 2;
@@ -40,6 +38,6 @@ int main(int argc, char** argv) {
         printf("Finalization error");
         return 4;
     }
-    
+
     return 0;
 }

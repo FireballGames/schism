@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   location.cpp
  * Author: d2emon
- * 
+ *
  * Created on 23 Январь 2014 г., 0:07
  */
 
@@ -19,6 +19,6 @@ location::~location() {
 }
 
 void location::randomloc() {
-    loctype = rand() % 4;
+    loctype = 0; //rand() % 4;
     style   = rand() % 8;
 }

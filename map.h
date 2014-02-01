@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   map.h
  * Author: d2emon
  *
@@ -13,12 +13,14 @@
 class map {
 public:
     location *locations[256][256];
-    
+
     map();
     map(const map& orig);
     virtual ~map();
+    int generate();
 private:
-
+    int flow(int x, int y, int terr_type, int iterations);
+    int can_flow(int x, int y, int terr_type);
 };
 
 #endif	/* MAP_H */

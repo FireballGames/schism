@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   gameGUI.h
  * Author: d2emon
  *
@@ -14,15 +14,18 @@
 class gameGUI {
 public:
     map* m;
-    
+    int x;
+    int y;
+
     gameGUI();
     gameGUI(const gameGUI& orig);
     virtual ~gameGUI();
-    
+
     int initialize();
     int title();
     int mainLoop();
     int finalize();
+    int showmap();
 private:
     SDLgraph*  graph;
 };
