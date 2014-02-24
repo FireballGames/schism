@@ -43,6 +43,8 @@ int D2SDLminimap::initialize() {
 
     terrain       = new D2SDLimage("images/terrain/terrain.png");
     terrain_small = new D2SDLimage("images/terrain/terrain_small.png");
+
+    return 0;
 }
 
 int D2SDLminimap::finalize() {

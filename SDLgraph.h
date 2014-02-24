@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   SDLgraph.h
  * Author: d2emon
  *
@@ -17,14 +17,14 @@ public:
     SDL_Surface* screen;
     D2SDLminimap* minimap;
     SDL_Event event;
-    
+
     SDLgraph();
     SDLgraph(const SDLgraph& orig);
     virtual ~SDLgraph();
 
     int initialize();
     int finalize();
-    int fillImage(SDL_Surface* dest, int x, int y, const char* filename);
+    int fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key = 1);
     int showLogo(const char* filename, const int delay);
     int flip();
     int pollEvent();

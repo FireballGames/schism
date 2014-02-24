@@ -1,7 +1,7 @@
-/* 
+/*
  * File:   SDLgraph.cpp
  * Author: d2emon
- * 
+ *
  * Created on 22 Январь 2014 г., 22:28
  */
 
@@ -40,21 +40,21 @@ int SDLgraph::initialize() {
     {
         return -1;
     }
-    
+
     screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
     if(!screen)
     {
         return -2;
     }
-    
+
     minimap = new D2SDLminimap;
     if(minimap->initialize() < 0)
     {
         return -2;
     }
-    
+
     SDL_WM_SetCaption(WM_CAPTION, NULL);
-    
+
     return 0;
 }
 
@@ -80,19 +80,19 @@ char* SDLgraph::getError() {
  * @param filename filename of the image
  * @return errorcode
  */
-int SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename)
+int SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key)
 {
     SDL_Rect offset;
     offset.x = x;
     offset.y = y;
 
     D2SDLimage* src = NULL;
-    
-    src = new D2SDLimage(filename);
+
+    src = new D2SDLimage(filename, 0);
     SDL_BlitSurface(src->image, NULL, dest, &offset);
     src->free();
 
-    return 0;   
+    return 0;
 }
 
 /**
@@ -120,4 +120,6 @@ int SDLgraph::flip()
 int SDLgraph::pollEvent()
 {
     SDL_PollEvent(&event);
+
+    //return 0;
 }

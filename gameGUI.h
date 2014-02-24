@@ -10,6 +10,8 @@
 
 #include "SDLgraph.h"
 #include "map.h"
+#include "interface/mapBig.h"
+#include "interface/mapMini.h"
 
 class gameGUI {
 public:
@@ -28,6 +30,8 @@ public:
     int showmap();
 private:
     SDLgraph*  graph;
+    mapBig* bigmap;
+    mapMini* minimap;
 };
 
 #endif	/* GAMEGUI_H */

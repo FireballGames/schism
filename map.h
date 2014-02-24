@@ -10,6 +10,9 @@
 
 #include "location.h"
 
+const int max_x = 256;
+const int max_y = 256;
+
 class map {
 public:
     location *locations[256][256];

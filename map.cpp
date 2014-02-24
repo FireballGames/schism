@@ -22,9 +22,9 @@ map::map() {
     srand(time( NULL ));
 
     //locations = new location*[256];
-    for(int i=0; i<256; i++) {
+    for(int i=0; i<max_x; i++) {
         //locations[i] = new location[256];
-        for(int j=0; j<256; j++) {
+        for(int j=0; j<max_y; j++) {
             location* loc = new location;
             locations[i][j] = loc;
             //printf("%d:%d,", loc->loctype, loc->style);
@@ -45,8 +45,8 @@ int map::generate() {
     printf("Map builder : Generating lakes\n");
     terr_type = 1;
     for(int i=0; i<lakes; i++) {
-        int lx = rand() % 256;
-        int ly = rand() % 256;
+        int lx = rand() % max_x;
+        int ly = rand() % max_y;
 
         printf("Lake %d: %d, %d\n", i, lx, ly);
         flow(lx, ly, terr_type, lake_size);
@@ -55,8 +55,8 @@ int map::generate() {
     printf("Map builder : Generating forests\n");
     terr_type = 2;
     for(int i=0; i<forests; i++) {
-        int lx = rand() % 256;
-        int ly = rand() % 256;
+        int lx = rand() % max_x;
+        int ly = rand() % max_y;
 
         printf("Forest %d: %d, %d\n", i, lx, ly);
         flow(lx, ly, terr_type, forest_size);
@@ -65,8 +65,8 @@ int map::generate() {
     printf("Map builder : Generating mountains\n");
     terr_type = 3;
     for(int i=0; i<mountains; i++) {
-        int lx = rand() % 256;
-        int ly = rand() % 256;
+        int lx = rand() % max_x;
+        int ly = rand() % max_y;
 
         printf("Mountain %d: %d, %d\n", i, lx, ly);
         flow(lx, ly, terr_type, mountain_size);
@@ -80,28 +80,28 @@ int map::flow(int x, int y, int terr_type, int iterations) {
     if((y > 0) && ((rand() % 2) > 0)) {
         int can_go = (locations[x][y-1]->loctype == 0);
         if(can_go) {
-            printf("Go %d, %d(%d)\n", x, y-1,locations[x][y-1]->loctype);
+            // printf("Go %d, %d(%d)\n", x, y-1,locations[x][y-1]->loctype);
             flow(x, y-1, terr_type, iterations-1);
         }
     }
-    if((x < 255) && ((rand() % 2) > 0)) {
+    if((x < (max_x-1)) && ((rand() % 2) > 0)) {
         int can_go = (locations[x+1][y]->loctype == 0);
         if(can_go) {
-            printf("Go %d, %d(%d)\n", x+1, y,locations[x+1][y]->loctype);
+            // printf("Go %d, %d(%d)\n", x+1, y,locations[x+1][y]->loctype);
             flow(x+1, y, terr_type, iterations-1);
         }
     }
-    if((y < 255) && ((rand() % 2) > 0)) {
+    if((y < (max_y-1)) && ((rand() % 2) > 0)) {
         int can_go = (locations[x][y+1]->loctype == 0);
         if(can_go) {
-            printf("Go %d, %d(%d)\n", x, y+1,locations[x][y+1]->loctype);
+            // printf("Go %d, %d(%d)\n", x, y+1,locations[x][y+1]->loctype);
             flow(x, y+1, terr_type, iterations-1);
         }
     }
     if((x > 0) && ((rand() % 2) > 0)) {
         int can_go = (locations[x-1][y]->loctype == 0);
         if(can_go) {
-            printf("Go %d, %d(%d)\n", x-1, y,locations[x-1][y]->loctype);
+            // printf("Go %d, %d(%d)\n", x-1, y,locations[x-1][y]->loctype);
             flow(x-1, y, terr_type, iterations-1);
         }
     }

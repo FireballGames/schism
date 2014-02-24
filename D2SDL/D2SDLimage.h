@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   D2SDLimage.h
  * Author: d2emon
  *
@@ -13,10 +13,10 @@
 class D2SDLimage {
 public:
     SDL_Surface* image;
-    D2SDLimage(const char* filename);
+    D2SDLimage(const char* filename, int color_key = 1);
     D2SDLimage(const D2SDLimage& orig);
     virtual ~D2SDLimage();
-    SDL_Surface* load(const char* filename);
+    SDL_Surface* load(const char* filename, int color_key = 1);
     int free();
 private:
 
