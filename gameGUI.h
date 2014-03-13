@@ -29,9 +29,14 @@ public:
     int finalize();
     int showmap();
 private:
-    SDLgraph*  graph;
+    SDLgraph* graph;
+    D2SDLimage* screen;
+    D2SDLimage* cursor;
     mapBig* bigmap;
     mapMini* minimap;
+
+    int moveView(int dx, int dy);
+    void moveMouse(int x, int y);
 };
 
 #endif	/* GAMEGUI_H */

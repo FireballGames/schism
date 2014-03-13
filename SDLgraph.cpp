@@ -21,7 +21,7 @@ const char* WM_CAPTION  = "Схизма";
 
 SDLgraph::SDLgraph() {
     screen  = NULL;
-    minimap = NULL;
+    // minimap = NULL;
 }
 
 SDLgraph::SDLgraph(const SDLgraph& orig) {
@@ -41,17 +41,19 @@ int SDLgraph::initialize() {
         return -1;
     }
 
-    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE); //SDL_FULLSCREEN
     if(!screen)
     {
         return -2;
     }
 
+    /*
     minimap = new D2SDLminimap;
     if(minimap->initialize() < 0)
     {
         return -2;
     }
+    */
 
     SDL_WM_SetCaption(WM_CAPTION, NULL);
 
@@ -64,7 +66,7 @@ int SDLgraph::initialize() {
  */
 int SDLgraph::finalize() {
     printf("SDL finalization\n");
-    minimap->finalize();
+    //minimap->finalize();
     SDL_Quit();
     return 0;
 }

@@ -3,5 +3,8 @@ obj
 schism.cbp
 schism.depend
 schism.layout
+schism_win.cbp
+schism_win.depend
+schism_win.layout
 .dep.inc
 Makefile
