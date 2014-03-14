@@ -18,6 +18,7 @@ class D2SDLscreen
         int loadImage(const char* filename);
         int show(SDLgraph* graph);
     protected:
+        int   loaded;
     private:
 };
 

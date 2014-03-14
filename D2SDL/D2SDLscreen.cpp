@@ -4,40 +4,35 @@
 D2SDLscreen::D2SDLscreen()
 {
     screen = NULL;
+    loaded = 0;
     //ctor
 }
 
 D2SDLscreen::~D2SDLscreen()
 {
+    screen->free();
     //dtor
 }
 
 int D2SDLscreen::loadImage(const char* filename)
 {
     screen = new D2SDLimage(filename);
+    loaded = (screen != false);
 
-    return 0;
+    return loaded;
 }
 
 int D2SDLscreen::show(SDLgraph* graph)
 {
-    if(logo_filename)
+    if(!loaded && logo_filename)
     {
+        printf("Loading %s\n", logo_filename);
         loadImage(logo_filename);
     }
     if(screen)
     {
-        /*
-        const int x = 0;
-        const int y = 0;
-
-        SDL_Rect offset;
-        offset.x = x;
-        offset.y = y;
-        */
-
+        printf("Blitting\n");
         SDL_BlitSurface(screen->image, NULL, graph->screen, NULL);
-        screen->free();
     }
 
     int res = graph->flip();

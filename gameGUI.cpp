@@ -84,17 +84,12 @@ int gameGUI::title() {
     delete logo3;
 
     // SDL logo
-    //screenMain* main_screen = NULL;
-    //main_screen = new screenMain;
-    //main_screen->show(graph);
+    screenMain* main_screen = NULL;
+    main_screen = new screenMain;
+    main_screen->show(graph);
 
-    screen = new D2SDLimage(IMG_BACKGROUND);//main_screen->screen;
-
-    /*
-    int mx = 0;
-    int my = 0;
-    SDL_GetMouseState(&mx, &my);
-    */
+    screen = main_screen->screen;
+    //screen = new D2SDLimage(IMG_BACKGROUND);
 
     moveMouse(0, 0);
 
@@ -247,17 +242,6 @@ int gameGUI::mainLoop() {
                 (SDL_BUTTON(SDL_BUTTON_MIDDLE))!=0,
                 */
 
-                /*
-                SDL_BlitSurface(screen->image, NULL, graph->screen, NULL);
-
-                SDL_Rect offset;
-                offset.x = graph->event.motion.x;
-                offset.y = graph->event.motion.y;
-
-                SDL_BlitSurface(cursor->image,  NULL, graph->screen, &offset);
-
-                graph->flip();
-                */
                 moveMouse(graph->event.motion.x, graph->event.motion.y);
             }
             if(graph->event.type == SDL_KEYDOWN) {
