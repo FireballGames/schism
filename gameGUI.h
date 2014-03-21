@@ -25,15 +25,18 @@ public:
 
     int initialize();
     int title();
-    int mainLoop();
+    int mainmenu();
+    int game();
     int finalize();
-    int showmap();
 private:
     SDLgraph* graph;
     D2SDLimage* screen;
     D2SDLimage* cursor;
     mapBig* bigmap;
     mapMini* minimap;
+
+    int mainLoop();
+    int showmap();
 
     int moveView(int dx, int dy);
     void moveMouse(int x, int y);

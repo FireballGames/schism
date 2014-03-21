@@ -29,9 +29,14 @@ int main(int argc, char** argv) {
         return 2;
     }
 
-    if(gui->mainLoop() < 0){
-        printf("Main loop error");
+    if(gui->mainmenu() < 0){
+        printf("Main menu error");
         return 3;
+    }
+
+    if(gui->game() < 0){
+        printf("Main loop error");
+        return 4;
     }
 
     if(gui->finalize() < 0){

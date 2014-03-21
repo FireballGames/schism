@@ -45,6 +45,10 @@ gameGUI::gameGUI(const gameGUI& orig) {
 gameGUI::~gameGUI() {
 }
 
+/**
+ * Intializing game
+ * @return int errorcode 0 if success
+ */
 int gameGUI::initialize() {
     printf("Game initialization\n");
 
@@ -60,8 +64,14 @@ int gameGUI::initialize() {
     return errorcode;
 }
 
+/**
+ * Showing title screen
+ * @return int errorcode 0 if success
+ */
 int gameGUI::title() {
-    SDL_ShowCursor(0);
+    printf("Showing title screen\n");
+
+    int errorcode = 0;
 
     // Fireball logo
     screenLogoFireball* logo1 = NULL;
@@ -75,15 +85,39 @@ int gameGUI::title() {
     logo2->show(graph);
     delete logo2;
 
+    return errorcode;
+}
+
+/**
+ * Using main menu screen
+ * @return int errorcode 0 if success
+ */
+int gameGUI::mainmenu() {
+    printf("Showing mainmenu\n");
+
+    int errorcode = 0;
+
     cursor = new D2SDLimage(IMG_CURSOR, 1);
 
-    // SDL logo
+    // Main menu
     screenLogoSchism* logo3 = NULL;
     logo3 = new screenLogoSchism;
     logo3->show(graph);
     delete logo3;
 
-    // SDL logo
+    return errorcode;
+}
+
+/**
+ * Main game screen
+ * @return int errorcode 0 if success
+ */
+int gameGUI::game() {
+    printf("Main game sceen\n");
+
+    int errorcode = 0;
+
+    // Main screen
     screenMain* main_screen = NULL;
     main_screen = new screenMain;
     main_screen->show(graph);
@@ -97,56 +131,10 @@ int gameGUI::title() {
     bigmap->initialize();
     minimap->initialize();
 
-    return 0;
+    return mainLoop();
 }
 
 int gameGUI::showmap() {
-    /*
-    int dx = 5;
-    int dy = 5;
-    int sx = x/dx;
-    int sy = y/dy;
-    int sx1 = (2 * (sx - sy) ) + 128 + 5;
-    int sy1 = sy + sx + 40;
-    */
-
-    /*
-    for(int i=0; i<(max_x/dx); i++) {
-        for(int j=0; j<(max_y/dy); j++) {
-            location* loc = NULL;
-            loc = m->locations[i*dx][j*dy];
-            graph->minimap->fill(i, j, loc->loctype, &graph->minimap->clip[loc->loctype][loc->style]);
-        }
-    }
-    int sx = x/dx;
-    int sy = y/dy;
-    int sx1 = (2 * (sx - sy) ) + 128 + 5;
-    int sy1 = sy + sx + 40;
-
-    */
-    // graph->minimap->show(528, 0, graph->screen);
-
-    /*
-    for(int i=0; i<20; i++) {
-        for(int j=0; j<20; j++) {
-            location* loc = NULL;
-            int lx = i + x - 10;
-            int ly = j + y - 10;
-            if((lx>=0)&&(ly>=0)&&(lx<=max_x)&&(ly<=max_y)) {
-                loc = m->locations[lx][ly];
-                int px = (100 * (i - j) )/2 + tile_x;
-                int py = (50  * (j + i) )/2 - tile_y;
-                graph->minimap->fillBig(px, py, loc->loctype, graph->screen, &graph->minimap->clipBig[loc->loctype][loc->style]);
-            }
-        }
-    }
-
-    graph->fillImage(graph->screen, tile_x/2, tile_y/2, IMG_UNIT      );
-    */
-    //graph->minimap->show(528, 0, graph->screen);
-
-    //printf("%d, %d\n", x, y);
-
     bigmap->generateMap(x, y, m);
     graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
     bigmap->show(0, 0, screen->image);
@@ -156,19 +144,6 @@ int gameGUI::showmap() {
     minimap->show(528, 0, screen->image);
 
     moveMouse(0, 0);
-    /*
-    SDL_BlitSurface(screen->image, NULL, graph->screen, NULL);
-
-    int mx = 400;
-    int my = 300;
-    SDL_GetMouseState(&mx, &my);
-
-    SDL_Rect offset;
-    offset.x = mx;
-    offset.y = my;
-
-    SDL_BlitSurface(cursor->image, NULL, graph->screen, &offset);
-    */
 
     if(graph->flip() < 0) {
         moved = 0;

@@ -3,15 +3,15 @@
 
 D2SDLscreen::D2SDLscreen()
 {
-    screen = NULL;
-    loaded = 0;
-    //ctor
+    screen      = NULL;
+    cursor      = NULL;
+    loaded      = 0;
+    show_cursor = 1;
 }
 
 D2SDLscreen::~D2SDLscreen()
 {
     screen->free();
-    //dtor
 }
 
 int D2SDLscreen::loadImage(const char* filename)
@@ -24,21 +24,21 @@ int D2SDLscreen::loadImage(const char* filename)
 
 int D2SDLscreen::show(SDLgraph* graph)
 {
-    if(!loaded && logo_filename)
-    {
+    if(!loaded && logo_filename){
         printf("Loading %s\n", logo_filename);
         loadImage(logo_filename);
     }
-    if(screen)
-    {
+
+    SDL_ShowCursor(show_cursor);
+
+    if(screen){
         printf("Blitting\n");
         SDL_BlitSurface(screen->image, NULL, graph->screen, NULL);
     }
 
     int res = graph->flip();
 
-    if(delay)
-    {
+    if(delay){
         SDL_Delay(delay);
     }
 
