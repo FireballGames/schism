@@ -131,7 +131,8 @@ int gameGUI::game() {
     bigmap->initialize();
     minimap->initialize();
 
-    return mainLoop();
+
+    return errorcode ? errorcode : mainLoop();
 }
 
 int gameGUI::showmap() {
@@ -241,8 +242,8 @@ int gameGUI::mainLoop() {
 int gameGUI::finalize() {
     printf("Game finalization\n");
 
-    cursor->free();
-    screen->free();
+    if(cursor) cursor->free();
+    // if(screen) screen->free();
     graph->finalize();
 
     return 0;
