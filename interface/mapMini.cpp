@@ -1,11 +1,12 @@
 #include "mapMini.h"
 
-const char* IMG_USERLOC = "images/terrain/userloc.png";
+const char* IMG_USERLOC        = "images/terrain/userloc.png";
+const char* MINIMAP_BACKGROUND = "images/minimap.png";
 
 mapMini::mapMini()
 {
     x0 = 8; //128 + 5;
-    y0 = 48; //40;
+    y0 = 8; //40;
     size_x = 256;
     size_y = 256;
     tile_w = 4;
@@ -21,7 +22,7 @@ mapMini::~mapMini()
 }
 
 SDL_Surface* mapMini::screen() {
-    D2SDLimage* img = new D2SDLimage("images/minimap.png");
+    D2SDLimage* img = new D2SDLimage(MINIMAP_BACKGROUND);
 
     return img->image;
 }
