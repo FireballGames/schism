@@ -20,5 +20,5 @@ location::~location() {
 
 void location::randomloc() {
     loctype = 0; //rand() % 4;
-    style   = rand() % 8;
+    style   = rand() % 4;
 }

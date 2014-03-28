@@ -123,5 +123,5 @@ int SDLgraph::pollEvent()
 {
     SDL_PollEvent(&event);
 
-    //return 0;
+    return 0;
 }
