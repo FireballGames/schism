@@ -8,19 +8,22 @@
 #ifndef SDLGRAPH_H
 #define	SDLGRAPH_H
 
-#include <SDL/SDL.h>
-#include "D2SDL/D2SDLimage.h"
-#include "D2SDL/D2SDLminimap.h"
+#include "D2SDLimage.h"
+#include "D2SDLminimap.h"
 
-class SDLgraph {
+#include <SDL/SDL.h>
+
+class D2SDLgraph {
 public:
     SDL_Surface* screen;
     D2SDLminimap* minimap;
     SDL_Event event;
 
-    SDLgraph();
-    SDLgraph(const SDLgraph& orig);
-    virtual ~SDLgraph();
+    int quit;
+
+    D2SDLgraph();
+    D2SDLgraph(const D2SDLgraph& orig);
+    virtual ~D2SDLgraph();
 
     int initialize();
     int finalize();

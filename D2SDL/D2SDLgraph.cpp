@@ -5,9 +5,9 @@
  * Created on 22 Январь 2014 г., 22:28
  */
 
-#include "SDLgraph.h"
-#include "D2SDL/D2SDLimage.h"
-#include "D2SDL/D2SDLminimap.h"
+#include "D2SDLgraph.h"
+#include "D2SDLimage.h"
+#include "D2SDLminimap.h"
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -16,44 +16,38 @@
 const int SCREEN_WIDTH  = 800;
 const int SCREEN_HEIGHT = 600;
 const int SCREEN_BPP    = 32;
+const int SCREEN_MODE   = SDL_SWSURFACE;//SDL_FULLSCREEN
 
 const char* WM_CAPTION  = "Схизма";
 
-SDLgraph::SDLgraph() {
+D2SDLgraph::D2SDLgraph() {
     screen  = NULL;
-    // minimap = NULL;
 }
 
-SDLgraph::SDLgraph(const SDLgraph& orig) {
+D2SDLgraph::D2SDLgraph(const D2SDLgraph& orig) {
 }
 
-SDLgraph::~SDLgraph() {
+D2SDLgraph::~D2SDLgraph() {
 }
 
 /**
  * Initializing SDL
  * @return initialized
  */
-int SDLgraph::initialize() {
+int D2SDLgraph::initialize() {
+    quit = 0;
+
     printf("SDL initialization\n");
     if(SDL_Init(SDL_INIT_EVERYTHING) < 0)
     {
         return -1;
     }
 
-    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE); //SDL_FULLSCREEN
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SCREEN_MODE);
     if(!screen)
     {
         return -2;
     }
-
-    /*
-    minimap = new D2SDLminimap;
-    if(minimap->initialize() < 0)
-    {
-        return -2;
-    }
-    */
 
     SDL_WM_SetCaption(WM_CAPTION, NULL);
 
@@ -64,14 +58,13 @@ int SDLgraph::initialize() {
  * Finalization SDL
  * @return finalized
  */
-int SDLgraph::finalize() {
+int D2SDLgraph::finalize() {
     printf("SDL finalization\n");
-    //minimap->finalize();
     SDL_Quit();
     return 0;
 }
 
-char* SDLgraph::getError() {
+char* D2SDLgraph::getError() {
     return SDL_GetError();
 }
 
@@ -82,7 +75,7 @@ char* SDLgraph::getError() {
  * @param filename filename of the image
  * @return errorcode
  */
-int SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key)
+int D2SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key)
 {
     SDL_Rect offset;
     offset.x = x;
@@ -97,31 +90,20 @@ int SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename, i
     return 0;
 }
 
-/**
- * Showing  logo
- * @param screen screen surface
- * @param x horizontal position
- * @param y vertical position
- * @param filename image filename
- * @param delay time to show logo
- * @return errorcode
- */
-int SDLgraph::showLogo(const char* filename, const int delay)
-{
-    fillImage(screen, 0, 0, filename);
-    int res = flip();
-    SDL_Delay(delay);
-    return res;
-}
-
-int SDLgraph::flip()
+int D2SDLgraph::flip()
 {
     return SDL_Flip(screen);
 }
 
-int SDLgraph::pollEvent()
+int D2SDLgraph::pollEvent()
 {
-    SDL_PollEvent(&event);
+    int res = SDL_PollEvent(&event);
 
-    return 0;
+    if(res){
+        if(event.type == SDL_QUIT) {
+            quit = 1;
+        }
+    }
+
+    return res;
 }

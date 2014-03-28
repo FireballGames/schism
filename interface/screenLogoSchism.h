@@ -9,6 +9,7 @@ class screenLogoSchism : public D2SDLscreen
     public:
         screenLogoSchism();
         virtual ~screenLogoSchism();
+        virtual int on_loop(D2SDLgraph* graph);
     protected:
     private:
 };

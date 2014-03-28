@@ -8,6 +8,7 @@ class screenLogoFireball : public D2SDLscreen
     public:
         screenLogoFireball();
         virtual ~screenLogoFireball();
+        virtual int on_loop(D2SDLgraph* graph);
     protected:
     private:
 };

@@ -5,15 +5,16 @@
  * Created on 22 Январь 2014 г., 23:02
  */
 
-#include "gameGUI.h"
-#include "SDLgraph.h"
 #include "map.h"
-#include <cstdlib>
-#include <time.h>
+#include "gameGUI.h"
+#include "D2SDL/D2SDLgraph.h"
 #include "interface/screenLogoFireball.h"
 #include "interface/screenLogoSDL.h"
 #include "interface/screenLogoSchism.h"
 #include "interface/screenMain.h"
+
+#include <cstdlib>
+#include <time.h>
 
 const int   UNIT_X   = 180;
 const int   UNIT_Y   = 180;
@@ -54,7 +55,7 @@ int gameGUI::initialize() {
 
     int errorcode = 0;
 
-    graph = new SDLgraph;
+    graph = new D2SDLgraph;
     errorcode = graph->initialize();
     if(errorcode<0) {
         printf("SDL error: %s\n",  graph->getError());
@@ -79,11 +80,17 @@ int gameGUI::title() {
     logo1->show(graph);
     delete logo1;
 
+    if(graph->quit)
+        return 1;
+
     // SDL logo
     screenLogoSDL* logo2 = NULL;
     logo2 = new screenLogoSDL;
     logo2->show(graph);
     delete logo2;
+
+    if(graph->quit)
+        return 1;
 
     return errorcode;
 }
@@ -104,6 +111,9 @@ int gameGUI::mainmenu() {
     logo3 = new screenLogoSchism;
     logo3->show(graph);
     delete logo3;
+
+    if(graph->quit)
+        return 1;
 
     return errorcode;
 }
@@ -242,7 +252,7 @@ int gameGUI::mainLoop() {
 int gameGUI::finalize() {
     printf("Game finalization\n");
 
-    if(cursor) cursor->free();
+    // if(cursor) cursor->free();
     // if(screen) screen->free();
     graph->finalize();
 

@@ -8,8 +8,8 @@
 #ifndef GAMEGUI_H
 #define	GAMEGUI_H
 
-#include "SDLgraph.h"
 #include "map.h"
+#include "D2SDL/D2SDLgraph.h"
 #include "interface/mapBig.h"
 #include "interface/mapMini.h"
 
@@ -29,7 +29,7 @@ public:
     int game();
     int finalize();
 private:
-    SDLgraph* graph;
+    D2SDLgraph* graph;
     D2SDLimage* screen;
     D2SDLimage* cursor;
     mapBig* bigmap;

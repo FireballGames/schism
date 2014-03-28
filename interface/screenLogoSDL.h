@@ -9,6 +9,7 @@ class screenLogoSDL : public D2SDLscreen
     public:
         screenLogoSDL();
         virtual ~screenLogoSDL();
+        virtual int on_loop(D2SDLgraph* graph);
     protected:
     private:
 };
