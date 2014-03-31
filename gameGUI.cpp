@@ -17,38 +17,48 @@
 #include "interface/screenLogoSchism.h"
 #include "interface/screenMain.h"
 
+const int DEFAULT_WINDOWED = 1;
+const int DEFAULT_HIGHRES  = 0;
+
+const char* IMG_CURSOR = "images/cursor.png";
+
+/*
 const int   UNIT_X   = 180;
 const int   UNIT_Y   = 180;
 const char* IMG_UNIT       = "images/unit.gif";
-const char* IMG_CURSOR     = "images/cursor.png";
-const char* IMG_BACKGROUND = "images/background.bmp";
+*/
 
+//const char* IMG_BACKGROUND = "images/background.bmp";
+
+/*
 const int tile_x = 400; //350
 const int tile_y = 256; //200
+*/
 
-double moved = 0;
+gameGUI::gameGUI()
+{
+    windowed = DEFAULT_WINDOWED;
+    highres  = DEFAULT_HIGHRES;
 
-gameGUI::gameGUI() {
     graph  = NULL;
     cursor = NULL;
 }
 
-gameGUI::gameGUI(const gameGUI& orig) {
-}
-
-gameGUI::~gameGUI() {
+gameGUI::~gameGUI()
+{
 }
 
 /**
  * Intializing game
  * @return int errorcode 0 if success
  */
-int gameGUI::initialize(int windowed = 0, int highres = 0) {
-    printf("Game initialization\n");
-
+int gameGUI::initialize()
+{
     int errorcode = 0;
 
-    graph = new D2SDLgraph;
+    printf("Game initialization\n");
+
+    graph     = new D2SDLgraph;
     errorcode = graph->initialize(windowed, highres);
     if(errorcode<0) {
         printf("SDL error: %s\n",  graph->getError());
@@ -62,31 +72,35 @@ int gameGUI::initialize(int windowed = 0, int highres = 0) {
  * Showing title screen
  * @return int errorcode 0 if success
  */
-int gameGUI::title() {
-    printf("Showing title screen\n");
-
+int gameGUI::title()
+{
     int errorcode = 0;
 
-    // Fireball logo
+    printf("Showing title screen\n");
+
+    /*
+     * Fireball logo screen
+     */
     screenLogoFireball* logo1 = NULL;
-    logo1 = new screenLogoFireball;
-    logo1->show(graph);
+    logo1 = new screenLogoFireball(graph);
+    errorcode = logo1->show();
     delete logo1;
+    if(graph->quit) return 1;
 
-    if(graph->quit)
-        return 1;
-
-    // SDL logo
-    screenLogoSDL* logo2 = NULL;
-    logo2 = new screenLogoSDL;
-    logo2->show(graph);
-    delete logo2;
-
-    if(graph->quit)
-        return 1;
-
+    /*
+     * Some game preparations
+     */
     cursor = new D2SDLcursor;
     cursor->load(IMG_CURSOR);
+
+    /*
+     * SDL logo screen
+     */
+    screenLogoSDL* logo2 = NULL;
+    logo2 = new screenLogoSDL(graph);
+    errorcode = logo2->show();
+    delete logo2;
+    if(graph->quit) return 1;
 
     return errorcode;
 }
@@ -95,20 +109,21 @@ int gameGUI::title() {
  * Using main menu screen
  * @return int errorcode 0 if success
  */
-int gameGUI::mainmenu() {
-    printf("Showing mainmenu\n");
-
+int gameGUI::mainmenu()
+{
     int errorcode = 0;
 
-    // Main menu
-    screenLogoSchism* logo3 = NULL;
-    logo3 = new screenLogoSchism;
-    logo3->cursor = cursor;
-    logo3->show(graph);
-    delete logo3;
+    printf("Showing mainmenu\n");
 
-    if(graph->quit)
-        return 1;
+    /*
+     * Main menu screen
+     */
+    screenLogoSchism* menuScreen = NULL;
+    menuScreen = new screenLogoSchism(graph);
+    menuScreen->cursor = cursor;
+    errorcode = menuScreen->show();
+    delete menuScreen;
+    if(graph->quit) return 1;
 
     return errorcode;
 }
@@ -117,19 +132,30 @@ int gameGUI::mainmenu() {
  * Main game screen
  * @return int errorcode 0 if success
  */
-int gameGUI::game() {
-    printf("Main game sceen\n");
-
+int gameGUI::game()
+{
     int errorcode = 0;
+
+    printf("Main game screen\n");
 
     // Main screen
     screenMain* main_screen = NULL;
-    main_screen = new screenMain;
-    printf("Main Screen initialized\n");
+    main_screen = new screenMain(graph);
     main_screen->cursor = cursor;
-    main_screen->show(graph);
+    main_screen->show();
+    if(graph->quit) return 1;
 
-    return errorcode; // ? errorcode : mainLoop();
+    return errorcode;
+}
+
+int gameGUI::finalize()
+{
+    printf("Game finalization\n");
+
+    //if(cursor) cursor->free();
+    graph->finalize();
+
+    return 0;
 }
 
 /*
@@ -200,13 +226,3 @@ int gameGUI::mainLoop() {
     return 0;
 }
 */
-
-int gameGUI::finalize() {
-    printf("Game finalization\n");
-
-    // if(cursor) cursor->free();
-    // if(screen) screen->free();
-    graph->finalize();
-
-    return 0;
-}

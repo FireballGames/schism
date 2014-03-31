@@ -2,7 +2,9 @@
 
 const char* SCHISM_LOGO_FILENAME = "images/logo_schism.bmp";
 
-screenLogoSchism::screenLogoSchism() {
+screenLogoSchism::screenLogoSchism(D2SDLgraph* graph) {
+    this->graph = graph;
+
     show_cursor   = 0;
 
     loadImage(SCHISM_LOGO_FILENAME);
@@ -12,37 +14,28 @@ screenLogoSchism::~screenLogoSchism(){
     //dtor
 }
 
-int screenLogoSchism::on_loop(D2SDLgraph* graph) {
-    int showscreen = true;
+/*
+int screenLogoSchism::on_loop() {
+    if(graph->event.type == SDL_MOUSEBUTTONUP)
+    {
+        cursor->getPosition();
 
-    while(graph->pollEvent()) {
-        /*
-        if(graph->event.type == SDL_MOUSEMOTION) {
-            repaint = true;
+        int mx = cursor->x;
+        int my = cursor->y;
+
+        if((mx<200)&&(my<50))
+        {
+            showing = false;
         }
-        */
-        if(graph->event.type == SDL_MOUSEBUTTONUP) {
-            /*
-            cursor->getPosition();
-
-            int mx = cursor->x;
-            int my = cursor->y;
-
-            if((mx<200)&&(my<50))
-            {
-                showscreen = false;
-            }
-            */
-
-            showscreen = false;
-        }
-        if(graph->event.type == SDL_KEYDOWN) {
-            showscreen = false;
-        }
-
     }
+}
+*/
 
-    repaint = true;
+void screenLogoSchism::on_mouseButtonDown(SDL_Event event) {
+    if(event.button.button == SDL_BUTTON_LEFT)
+        showing = false;
+}
 
-    return showscreen;
+void screenLogoSchism::on_keyDown(SDL_Event event) {
+    showing = false;
 }

@@ -2,8 +2,10 @@
 
 const char* MAIN_LOGO_FILENAME = "images/background.bmp";
 
-screenMain::screenMain()
+screenMain::screenMain(D2SDLgraph* graph)
 {
+    this->graph = graph;
+
     m = new map;
     x = 128;
     y = 128;
@@ -18,6 +20,10 @@ screenMain::screenMain()
     m->generate();
     printf("Map generated\n");
 
+    // m->save("test.map");
+    // m->load("test.map");
+    // printf("Map loaded\n");
+
     bigmap->initialize();
     minimap->initialize();
 }
@@ -27,17 +33,11 @@ screenMain::~screenMain()
     //dtor
 }
 
-int screenMain::on_loop(D2SDLgraph* graph) {
-    //moveMouse(graph);
-
-    int showscreen = true;
-
+void screenMain::on_loop() {
     cursor->getPosition();
 
     int mx = cursor->x;
     int my = cursor->y;
-
-    //SDL_GetMouseState(&mx, &my);
 
     if(mx < 10) {
         moveView(-1,  1);
@@ -51,28 +51,18 @@ int screenMain::on_loop(D2SDLgraph* graph) {
     if(my > 590) {
         moveView( 1,  1);
     }
+}
 
-    while(graph->pollEvent()) {
-        /*
-        if(graph->event.type == SDL_MOUSEMOTION) {
-            repaint = true;
-        }
-        */
-        if(graph->event.type == SDL_KEYDOWN) {
-            switch( graph->event.key.keysym.sym ) {
-                case SDLK_UP:    moveView(-1, -1); break;
-                case SDLK_DOWN:  moveView( 1,  1); break;
-                case SDLK_LEFT:  moveView(-1,  1); break;
-                case SDLK_RIGHT: moveView( 1, -1); break;
-                case SDLK_ESCAPE: showscreen = false; break;
-                default: break;
-            }
-        }
+void screenMain::on_keyDown(SDL_Event event) {
+    switch( graph->event.key.keysym.sym ) {
+        case SDLK_UP:    moveView(-1, -1); break;
+        case SDLK_DOWN:  moveView( 1,  1); break;
+        case SDLK_LEFT:  moveView(-1,  1); break;
+        case SDLK_RIGHT: moveView( 1, -1); break;
+        case SDLK_ESCAPE: showing = false; break;
+        default: break;
     }
 
-    repaint = true;
-
-    return showscreen;
 }
 
 int screenMain::moveView(int dx, int dy) {
@@ -86,10 +76,8 @@ int screenMain::moveView(int dx, int dy) {
     return 0;
 }
 
-int screenMain::on_paint(D2SDLgraph* graph)
+void screenMain::on_paint()
 {
-    int res = 0;
-
     bigmap->generateMap(x, y, m);
     //graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
     bigmap->show(0, 0, screen->image);
@@ -97,7 +85,5 @@ int screenMain::on_paint(D2SDLgraph* graph)
     minimap->generateMap(-1, -1, m);
     minimap->setViewpoint(x,y);
     minimap->show(528, 0, screen->image);
-
-    return res;
 }
 

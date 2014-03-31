@@ -8,6 +8,8 @@ D2SDLmap::D2SDLmap()
     tiles  = NULL;
     tile_w = 1;
     tile_h = 1;
+    water_modifier = 0;
+    max_style = 16;
     //ctor
 }
 
@@ -69,7 +71,15 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
                 int px = ((i - j) + (size_x - 1)) * (tile_w / 2) / pack;
                 int py = ((j + i)               ) * (tile_h / 2) / pack; // - tile_h;
 
-                fillMap(px, py, loc->loctype, &clip[loc->loctype][loc->style]);
+                char locstyle = loc->style;
+                char loctype  = loc->loctype;
+                if(loctype == 1)
+                {
+                    locstyle = (locstyle + water_modifier)%16;//
+                }
+                if(locstyle>=max_style) locstyle = locstyle % max_style;
+
+                fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
             }
         }
     }
@@ -110,6 +120,10 @@ int D2SDLmap::show(int x, int y, SDL_Surface* screen)
     offset.y = y;
 
     SDL_BlitSurface(image, NULL, screen, &offset);
+
+    water_modifier++;
+    if (water_modifier>=16)
+        water_modifier = 0;
 
     return 0;
 }

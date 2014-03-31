@@ -15,21 +15,29 @@
 
 class gameGUI {
 public:
+    /*
+     * Graphics flags
+     */
+    int windowed;
+    int highres;
+
+    /*
+     * Constructor & Destructor
+     */
     gameGUI();
-    gameGUI(const gameGUI& orig);
     virtual ~gameGUI();
 
-    int initialize(int windowed, int highres);
+    /*
+     * Game stages
+     */
+    int initialize();
     int title();
     int mainmenu();
     int game();
     int finalize();
 private:
-    D2SDLgraph* graph;
-    D2SDLimage* screen;
-    D2SDLcursor* cursor;
-
-    int mainLoop();
+    D2SDLgraph*  graph;  // Game graphics
+    D2SDLcursor* cursor; // Game cursor
 };
 
 #endif	/* GAMEGUI_H */

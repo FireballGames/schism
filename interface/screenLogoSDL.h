@@ -1,15 +1,14 @@
 #ifndef SCREENLOGOSDL_H
 #define SCREENLOGOSDL_H
 
-#include "../D2SDL/D2SDLscreen.h"
+#include "screenLogo.h"
 
 
-class screenLogoSDL : public D2SDLscreen
+class screenLogoSDL : public screenLogo
 {
     public:
-        screenLogoSDL();
+        screenLogoSDL(D2SDLgraph* graph);
         virtual ~screenLogoSDL();
-        virtual int on_loop(D2SDLgraph* graph);
     protected:
     private:
 };

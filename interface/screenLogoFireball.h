@@ -1,14 +1,13 @@
 #ifndef SCREENLOGOFIREBAL_H
 #define SCREENLOGOFIREBAL_H
 
-#include "../D2SDL/D2SDLscreen.h"
+#include "screenLogo.h"
 
-class screenLogoFireball : public D2SDLscreen
+class screenLogoFireball : public screenLogo
 {
     public:
-        screenLogoFireball();
+        screenLogoFireball(D2SDLgraph* graph);
         virtual ~screenLogoFireball();
-        virtual int on_loop(D2SDLgraph* graph);
     protected:
     private:
 };

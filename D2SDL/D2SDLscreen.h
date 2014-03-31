@@ -10,25 +10,30 @@ class D2SDLscreen
 {
     public:
         D2SDLscreen();
+        D2SDLscreen(D2SDLgraph* graph);
         virtual ~D2SDLscreen();
 
-        D2SDLimage* screen;
+        D2SDLgraph*  graph;
+        D2SDLimage*  screen;
         D2SDLcursor* cursor;
-        D2SDLtimer* timer;
 
-        int   delay;
         int   fps;
-        int   repaint;
         int   show_cursor;
+        int   repaint;
+        int   showing;
         char* logo_filename;
 
         int loadImage(const char* filename);
-        int show(D2SDLgraph* graph);
-        virtual int paint(D2SDLgraph* graph);
-        void moveMouse(D2SDLgraph* graph);
+        int show();
+        virtual int paint();
+        void moveMouse();
 
-        virtual int on_loop(D2SDLgraph* graph);
-        virtual int on_paint(D2SDLgraph* graph);
+        virtual void on_loop();
+        virtual void on_paint();
+        virtual void on_mouseMotion(SDL_Event event);
+        virtual void on_mouseButtonDown(SDL_Event event);
+        virtual void on_mouseButtonUp(SDL_Event event);
+        virtual void on_keyDown(SDL_Event event);
     protected:
         int         frame;
         D2SDLtimer* timer_fps;

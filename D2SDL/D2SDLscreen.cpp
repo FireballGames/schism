@@ -7,20 +7,23 @@ const int BASIC_MAX_FPS = 500;
 
 D2SDLscreen::D2SDLscreen()
 {
+    graph       = NULL;
     screen      = NULL;
     cursor      = NULL;
-    timer       = NULL;
-    delay       = 0;
     loaded      = 0;
     show_cursor = 1;
     repaint     = true;
-
-    timer = new D2SDLtimer();
 
     timer_fps = NULL;
     frame     = 0;
     fps       = BASIC_MAX_FPS;
     timer_fps = new D2SDLtimer();
+}
+
+D2SDLscreen::D2SDLscreen(D2SDLgraph* graph)
+{
+    D2SDLscreen();
+    this->graph = graph;
 }
 
 D2SDLscreen::~D2SDLscreen()
@@ -38,31 +41,50 @@ int D2SDLscreen::loadImage(const char* filename)
     return loaded ? 0 : -1;
 }
 
-int D2SDLscreen::show(D2SDLgraph* graph)
+int D2SDLscreen::show()
 {
     int res = 0;
 
     if(!loaded && logo_filename){
         res = loadImage(logo_filename);
+        if(res<0) return res;
     }
 
-    if(res<0)
-        return res;
+    SDL_ShowCursor(show_cursor);
 
-    res = SDL_ShowCursor(show_cursor);
-    if(res<0)
-        return res;
+    showing = (res==0);
+    repaint = true;
 
-    timer->start();
+    while(showing)
+    {
+        while(graph->pollEvent())
+        {
+            if(graph->event.type == SDL_MOUSEMOTION)
+            {
+                if(cursor) repaint = true;
+                on_mouseMotion(graph->event);
+            }
+            else if(graph->event.type == SDL_MOUSEBUTTONDOWN)
+            {
+                on_mouseButtonDown(graph->event);
+            }
+            else if(graph->event.type == SDL_MOUSEBUTTONUP)
+            {
+                on_mouseButtonUp(graph->event);
+            }
+            else if(graph->event.type == SDL_KEYDOWN)
+            {
+                on_keyDown(graph->event);
+            }
+            //else
+                // printf("Basic %d\n", graph->event.type);
+        }
 
-    res = paint(graph);
-    if(res<0)
-        return res;
+        on_loop();
 
-    int showscreen = (res==0);
-    while(showscreen) {
-        showscreen = on_loop(graph);
-
+        /*
+         * Counting FPS
+         */
         if(timer_fps->is_started() && (timer_fps->get_ticks() < 1000))
         {
             frame++;
@@ -73,17 +95,30 @@ int D2SDLscreen::show(D2SDLgraph* graph)
             timer_fps->start();
         }
 
+        /*
+         * Painting
+         */
+        repaint =true;
         if(repaint && (frame < fps))
         {
-            paint(graph);
-            repaint = false;
+            res = paint();
+            if(res<0) return res;
+        }
+
+        /*
+         * Quiting
+         */
+        if(graph->quit)
+        {
+            showing = false;
+            res = 1;
         }
     }
 
     return res;
 }
 
-int D2SDLscreen::paint(D2SDLgraph* graph)
+int D2SDLscreen::paint()
 {
     int res = 0;
 
@@ -94,41 +129,39 @@ int D2SDLscreen::paint(D2SDLgraph* graph)
         if (res<0) {
             printf("%s\n", SDL_GetError());
         }
-        moveMouse(graph);
+        moveMouse();
     }
-    if(res<0)
-        return res;
+    if(res<0) return res;
 
-    res = on_paint(graph);
-    if(res<0)
-        return res;
+    on_paint();
 
     res = graph->flip();
-    if(res<0)
-        return res;
+    if(res<0) return res;
+
+    repaint = false;
 
     return res;
 }
 
-int D2SDLscreen::on_loop(D2SDLgraph* graph) {
-    int showscreen = true;
-
-    if(timer->get_ticks() >= delay) {
-        showscreen = false;
-    }
-
-    while(graph->pollEvent()) {
-        printf("Basic %d\n", graph->event.type);
-    }
-
-    return showscreen;
+void D2SDLscreen::on_loop() {
 }
 
-int D2SDLscreen::on_paint(D2SDLgraph* graph) {
-    return 0;
+void D2SDLscreen::on_paint() {
 }
 
-void D2SDLscreen::moveMouse(D2SDLgraph* graph=NULL) {
+void D2SDLscreen::on_mouseMotion(SDL_Event event) {
+}
+
+void D2SDLscreen::on_mouseButtonDown(SDL_Event event) {
+}
+
+void D2SDLscreen::on_mouseButtonUp(SDL_Event event) {
+}
+
+void D2SDLscreen::on_keyDown(SDL_Event event) {
+}
+
+void D2SDLscreen::moveMouse() {
     if(cursor)
     {
         cursor->getPosition();

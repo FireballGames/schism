@@ -22,7 +22,6 @@ public:
     int quit;
 
     D2SDLgraph();
-    D2SDLgraph(const D2SDLgraph& orig);
     virtual ~D2SDLgraph();
 
     int initialize(int windowed, int highres);

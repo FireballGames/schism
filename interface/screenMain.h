@@ -14,16 +14,17 @@ class screenMain : public D2SDLscreen
         int x;
         int y;
 
-        screenMain();
+        screenMain(D2SDLgraph* graph);
         virtual ~screenMain();
+        virtual void on_loop();
+        virtual void on_paint();
+        virtual void on_keyDown(SDL_Event event);
     protected:
         mapBig*  bigmap;
         mapMini* minimap;
 
         int moveView(int dx, int dy);
     private:
-        virtual int on_loop(D2SDLgraph* graph);
-        virtual int on_paint(D2SDLgraph* graph);
 };
 
 #endif // SCREENMAIN_H

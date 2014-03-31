@@ -10,17 +10,19 @@
 
 #include "location.h"
 
-const int max_x = 256;
-const int max_y = 256;
+const int max_x = 255;
+const int max_y = 255;
 
 class map {
 public:
-    location *locations[256][256];
+    location *locations[max_x][max_y];
 
     map();
     map(const map& orig);
     virtual ~map();
     int generate();
+    int save(const char* filename);
+    int load(const char* filename);
 private:
     int flow(int x, int y, int terr_type, int iterations);
     int can_flow(int x, int y, int terr_type);

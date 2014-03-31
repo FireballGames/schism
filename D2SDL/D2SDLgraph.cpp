@@ -15,8 +15,8 @@
 
 const int SCREEN_WIDTH_LOW   =  800;
 const int SCREEN_HEIGHT_LOW  =  600;
-const int SCREEN_WIDTH_HIGH  = 1200;
-const int SCREEN_HEIGHT_HIGH =  900;
+const int SCREEN_WIDTH_HIGH  = 1024;
+const int SCREEN_HEIGHT_HIGH =  768;
 
 const int SCREEN_BPP    = 32;
 
@@ -27,9 +27,6 @@ const char* WM_CAPTION  = "Схизма";
 
 D2SDLgraph::D2SDLgraph() {
     screen  = NULL;
-}
-
-D2SDLgraph::D2SDLgraph(const D2SDLgraph& orig) {
 }
 
 D2SDLgraph::~D2SDLgraph() {

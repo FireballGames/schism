@@ -75,6 +75,79 @@ int map::generate() {
     return 0;
 }
 
+int map::save(const char* filename)
+{
+    unsigned short int mapsize[] = {max_x, max_y};
+
+    char item_size  = 0;
+    char block_size = 0;
+
+    FILE* f = fopen(filename, "w+");
+
+    item_size  = sizeof(unsigned short int);
+    block_size = sizeof(mapsize) / item_size;
+    fwrite(mapsize, item_size, block_size, f);
+
+    char locdata[4];
+    item_size  = sizeof(char);
+    block_size = sizeof(locdata) / item_size;
+
+    for(int j=0; j<max_y; j++)
+    {
+        for(int i=0; i<max_x; i++)
+        {
+            location* loc = locations[i][j];
+
+            locdata[0] = loc->loctype;
+            locdata[1] = loc->style;
+            locdata[2] = 0;
+            locdata[3] = 0;
+
+            printf("Locdata %d, %d \n", item_size, block_size);
+
+            fwrite(locdata, item_size, block_size, f);
+        }
+    }
+
+    fclose(f);
+
+    return 0;
+}
+
+int map::load(const char* filename)
+{
+    unsigned short int mapsize[2];
+
+    char item_size  = 0;
+    char block_size = 0;
+
+    FILE* f = fopen(filename, "r");
+
+    item_size  = sizeof(unsigned short int);
+    block_size = sizeof(mapsize) / item_size;
+    fread(mapsize, item_size, block_size, f);
+
+    char locdata[4];
+    item_size  = sizeof(char);
+    block_size = sizeof(locdata) / item_size;
+
+    for(int j=0; j<max_y; j++)
+    {
+        for(int i=0; i<max_x; i++)
+        {
+            fread(locdata, item_size, block_size, f);
+
+            location* loc = locations[i][j];
+            loc->loctype = locdata[0];
+            loc->style   = locdata[1];
+        }
+    }
+
+    fclose(f);
+
+    return 0;
+}
+
 int map::flow(int x, int y, int terr_type, int iterations) {
   if(can_flow(x, y, terr_type) && (iterations > 0)) {
     if((y > 0) && ((rand() % 2) > 0)) {
