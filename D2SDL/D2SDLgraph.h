@@ -25,7 +25,7 @@ public:
     D2SDLgraph(const D2SDLgraph& orig);
     virtual ~D2SDLgraph();
 
-    int initialize();
+    int initialize(int windowed, int highres);
     int finalize();
     int fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key = 1);
     int showLogo(const char* filename, const int delay);

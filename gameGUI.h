@@ -15,15 +15,11 @@
 
 class gameGUI {
 public:
-    map* m;
-    int x;
-    int y;
-
     gameGUI();
     gameGUI(const gameGUI& orig);
     virtual ~gameGUI();
 
-    int initialize();
+    int initialize(int windowed, int highres);
     int title();
     int mainmenu();
     int game();
@@ -31,15 +27,9 @@ public:
 private:
     D2SDLgraph* graph;
     D2SDLimage* screen;
-    D2SDLimage* cursor;
-    mapBig* bigmap;
-    mapMini* minimap;
+    D2SDLcursor* cursor;
 
     int mainLoop();
-    int showmap();
-
-    int moveView(int dx, int dy);
-    void moveMouse(int x, int y);
 };
 
 #endif	/* GAMEGUI_H */

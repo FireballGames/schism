@@ -13,10 +13,15 @@
 #include <SDL/SDL_image.h>
 #include <cstdlib>
 
-const int SCREEN_WIDTH  = 800;
-const int SCREEN_HEIGHT = 600;
+const int SCREEN_WIDTH_LOW   =  800;
+const int SCREEN_HEIGHT_LOW  =  600;
+const int SCREEN_WIDTH_HIGH  = 1200;
+const int SCREEN_HEIGHT_HIGH =  900;
+
 const int SCREEN_BPP    = 32;
-const int SCREEN_MODE   = SDL_SWSURFACE;//SDL_FULLSCREEN
+
+const int SCREEN_MODE_WINDOW     = SDL_SWSURFACE;
+const int SCREEN_MODE_FULLSCREEN = SDL_FULLSCREEN;
 
 const char* WM_CAPTION  = "Схизма";
 
@@ -34,7 +39,7 @@ D2SDLgraph::~D2SDLgraph() {
  * Initializing SDL
  * @return initialized
  */
-int D2SDLgraph::initialize() {
+int D2SDLgraph::initialize(int windowed = 0, int highres = 0) {
     quit = 0;
 
     printf("SDL initialization\n");
@@ -43,7 +48,21 @@ int D2SDLgraph::initialize() {
         return -1;
     }
 
-    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SCREEN_MODE);
+    int mode = SCREEN_MODE_FULLSCREEN;
+    if(windowed)
+    {
+        mode = SCREEN_MODE_WINDOW;
+    }
+
+    int w = SCREEN_WIDTH_LOW;
+    int h = SCREEN_HEIGHT_LOW;
+    if(highres)
+    {
+        w = SCREEN_WIDTH_HIGH;
+        h = SCREEN_HEIGHT_HIGH;
+    }
+
+    screen = SDL_SetVideoMode(w, h, SCREEN_BPP, mode);
     if(!screen)
     {
         return -2;
