@@ -5,8 +5,8 @@
  * Created on 20 Январь 2014 г., 22:39
  */
 
-//#define FULLSCREEN
-//#define HIGHRES
+#define FULLSCREEN
+#define HIGHRES
 
 #include <cstdlib>
 #include <iostream>

@@ -14,7 +14,8 @@ D2SDLcursor::~D2SDLcursor()
 int D2SDLcursor::load(const char* filename)
 {
     image = new D2SDLimage(filename, 1);
-    //ctor
+
+    return 0;
 }
 
 void D2SDLcursor::getPosition()

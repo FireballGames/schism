@@ -100,7 +100,7 @@ int map::save(const char* filename)
 
             locdata[0] = loc->loctype;
             locdata[1] = loc->style;
-            locdata[2] = 0;
+            locdata[2] = loc->object;
             locdata[3] = 0;
 
             printf("Locdata %d, %d \n", item_size, block_size);
@@ -140,6 +140,7 @@ int map::load(const char* filename)
             location* loc = locations[i][j];
             loc->loctype = locdata[0];
             loc->style   = locdata[1];
+            loc->object  = locdata[2];
         }
     }
 

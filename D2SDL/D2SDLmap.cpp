@@ -10,6 +10,7 @@ D2SDLmap::D2SDLmap()
     tile_h = 1;
     water_modifier = 0;
     max_style = 16;
+    objects = 0;
     //ctor
 }
 
@@ -36,6 +37,7 @@ int D2SDLmap::initialize() {
     }
 
     tiles = new D2SDLimage(map_tiles);
+    obj   = new D2SDLimage("images/terrain/stolb.png");
     printf("Map tiles loaded\n");
 
     return 0;
@@ -73,6 +75,8 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
 
                 char locstyle = loc->style;
                 char loctype  = loc->loctype;
+                char locobj   = loc->object;
+
                 if(loctype == 1)
                 {
                     locstyle = (locstyle + water_modifier)%16;//
@@ -80,6 +84,15 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
                 if(locstyle>=max_style) locstyle = locstyle % max_style;
 
                 fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
+
+                if(objects)
+                {
+                    if(locobj == 1)
+                    {
+                        if(loctype == 0)
+                            fillObj(px, py);
+                    }
+                }
             }
         }
     }
@@ -103,6 +116,26 @@ int D2SDLmap::fillMap(int x, int y, int id, SDL_Rect* clip = NULL) {
     offset.y = y1;
 
     SDL_BlitSurface(tiles->image, clip, image, &offset);
+
+    return 0;
+}
+
+/**
+ * Filling object
+ * @param x horizontal position
+ * @param y vertical position
+ * @param id id of the image
+ * @return errorcode
+ */
+int D2SDLmap::fillObj(int x, int y) {
+    int x1 = x + x0; //(tile_w * (x - y) ) + x0;
+    int y1 = y + y0 - 137; //(tile_h * (y + x) ) + y0;
+
+    SDL_Rect offset;
+    offset.x = x1;
+    offset.y = y1;
+
+    SDL_BlitSurface(obj->image, NULL, image, &offset);
 
     return 0;
 }

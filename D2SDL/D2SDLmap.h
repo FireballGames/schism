@@ -16,6 +16,7 @@ class D2SDLmap
         int size_x;
         int size_y;
         int max_style;
+        int objects;
         int x0;
         int y0;
 
@@ -24,6 +25,7 @@ class D2SDLmap
         SDL_Surface* image;
         SDL_Surface* background;
         D2SDLimage* tiles;
+        D2SDLimage* obj;
 
         D2SDLmap();
         virtual ~D2SDLmap();
@@ -32,6 +34,7 @@ class D2SDLmap
         int finalize();
         int generateMap(int x, int y, map* m);
         int fillMap(int x, int y, int id, SDL_Rect* clip);
+        int fillObj(int x, int y);
         int show(int x, int y, SDL_Surface* screen);
     protected:
         char water_modifier;

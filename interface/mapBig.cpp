@@ -11,6 +11,7 @@ mapBig::mapBig()
     map_tiles = "images/terrain/terrain.png";
 
     pack = 1;
+    objects = 1;
 }
 
 mapBig::~mapBig()

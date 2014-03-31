@@ -21,4 +21,6 @@ location::~location() {
 void location::randomloc() {
     loctype = 0; //rand() % 4;
     style   = rand() % 16;
+    int rp = rand() % 200;
+    object = (rp < 1);
 }

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   location.h
  * Author: d2emon
  *
@@ -12,7 +12,8 @@ class location {
 public:
     int loctype;
     int style;
-    
+    int object;
+
     location();
     location(const location& orig);
     virtual ~location();
