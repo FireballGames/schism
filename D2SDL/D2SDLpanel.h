@@ -12,12 +12,16 @@ class D2SDLpanel
         D2SDLpanel(D2SDLgraph* graph);
         virtual ~D2SDLpanel();
 
+        /*
         D2SDLgraph*   graph;  // Main graphical object
         D2SDLsurface* image;  // Panel image
+        */
 
+        /*
         D2SDLpanel* parent;   // Parent panel
         D2SDLpanel* children; // Children panel
         D2SDLpanel* next;     // Next panel
+        */
 
         int x; // Panel top
         int y; // Panel left

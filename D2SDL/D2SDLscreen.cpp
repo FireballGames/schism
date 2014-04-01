@@ -108,7 +108,7 @@ int D2SDLscreen::show()
         /*
          * Quiting
          */
-        if(graph->quit)
+        if(graph->stopped)
         {
             showing = false;
             res = 1;
@@ -125,7 +125,7 @@ int D2SDLscreen::paint()
     if(screen){
         if(!screen->image)
             printf("No screen\n");
-        int res = SDL_BlitSurface(screen->image, NULL, graph->screen, NULL);
+        int res = SDL_BlitSurface(screen->image, NULL, graph->surface, NULL);
         if (res<0) {
             printf("%s\n", SDL_GetError());
         }
@@ -170,6 +170,6 @@ void D2SDLscreen::moveMouse() {
         offset.x = cursor->x;
         offset.y = cursor->y;
 
-        SDL_BlitSurface(cursor->image->image,  NULL, graph->screen, &offset);
+        SDL_BlitSurface(cursor->image->image,  NULL, graph->surface, &offset);
     }
 }

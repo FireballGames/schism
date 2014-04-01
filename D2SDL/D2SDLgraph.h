@@ -13,25 +13,28 @@
 
 #include <SDL/SDL.h>
 
-class D2SDLgraph {
+class D2SDLgraph
+{
 public:
-    SDL_Surface* screen;
-    D2SDLminimap* minimap;
-    SDL_Event event;
+    SDL_Surface*  surface; //Drawing surface
+    //D2SDLminimap* minimap;
+    SDL_Event event; // Polled event
 
-    int quit;
+    int width;    // Window width
+    int height;   // Window height
+    bool stopped; // If game is stopping
 
     D2SDLgraph();
     virtual ~D2SDLgraph();
 
-    int initialize(int windowed, int highres);
+    int initialize(bool fullscreen, bool highres);
     int finalize();
-    int fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key = 1);
-    int showLogo(const char* filename, const int delay);
-    int flip();
-    int pollEvent();
     char* getError();
-    SDL_Rect buildrect(int x, int y);
+    int pollEvent();
+    int flip();
+    int fillImage(SDL_Surface* dest, int x, int y, const char* filename, int color_key = 1);
+    //int showLogo(const char* filename, const int delay);
+    //SDL_Rect buildrect(int x, int y);
 private:
 };
 

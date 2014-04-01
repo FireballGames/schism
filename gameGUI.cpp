@@ -59,7 +59,7 @@ int gameGUI::initialize()
     printf("Game initialization\n");
 
     graph     = new D2SDLgraph;
-    errorcode = graph->initialize(windowed, highres);
+    errorcode = graph->initialize(!windowed, highres);
     if(errorcode<0) {
         printf("SDL error: %s\n",  graph->getError());
         return errorcode;
@@ -85,7 +85,7 @@ int gameGUI::title()
     logo1 = new screenLogoFireball(graph);
     errorcode = logo1->show();
     delete logo1;
-    if(graph->quit) return 1;
+    if(graph->stopped) return 1;
 
     /*
      * Some game preparations
@@ -100,7 +100,7 @@ int gameGUI::title()
     logo2 = new screenLogoSDL(graph);
     errorcode = logo2->show();
     delete logo2;
-    if(graph->quit) return 1;
+    if(graph->stopped) return 1;
 
     return errorcode;
 }
@@ -123,7 +123,7 @@ int gameGUI::mainmenu()
     menuScreen->cursor = cursor;
     errorcode = menuScreen->show();
     delete menuScreen;
-    if(graph->quit) return 1;
+    if(graph->stopped) return 1;
 
     return errorcode;
 }
@@ -143,7 +143,7 @@ int gameGUI::game()
     main_screen = new screenMain(graph);
     main_screen->cursor = cursor;
     main_screen->show();
-    if(graph->quit) return 1;
+    if(graph->stopped) return 1;
 
     return errorcode;
 }

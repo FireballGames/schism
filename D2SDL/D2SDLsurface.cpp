@@ -38,14 +38,14 @@ int D2SDLsurface::free()
  * @param D2SDLgraph graph Main graphical object
  * @return errorcode
  */
-int D2SDLsurface::paint(D2SDLgraph* graph);
+int D2SDLsurface::paint(D2SDLgraph* graph)
 {
     int errorcode = 0;
 
     if(!surface)
         return -1;
 
-    errorcode = SDL_BlitSurface(surface, NULL, graph->screen, NULL);
+    errorcode = SDL_BlitSurface(surface, NULL, graph->surface, NULL);
 
     if (errorcode<0)
     {
