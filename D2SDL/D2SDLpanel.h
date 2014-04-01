@@ -1,27 +1,23 @@
 #ifndef D2SDLPANEL_H
 #define D2SDLPANEL_H
 
+#include "D2SDLcomponent.h"
 #include "D2SDLgraph.h"
-#include "D2SDLimage.h"
-#include "D2SDLtimer.h"
+#include "D2SDLsurface.h"
 
-class D2SDLpanel
+class D2SDLpanel : private D2SDLcomponent
 {
     public:
         D2SDLpanel();
         D2SDLpanel(D2SDLgraph* graph);
         virtual ~D2SDLpanel();
 
-        /*
         D2SDLgraph*   graph;  // Main graphical object
-        D2SDLsurface* image;  // Panel image
-        */
+        D2SDLsurface* surface;  // Panel image
 
-        /*
-        D2SDLpanel* parent;   // Parent panel
-        D2SDLpanel* children; // Children panel
-        D2SDLpanel* next;     // Next panel
-        */
+        D2SDLcomponent* parent;   // Parent panel
+        D2SDLcomponent* children; // Children panel
+        D2SDLcomponent* next;     // Next panel
 
         int x; // Panel top
         int y; // Panel left
