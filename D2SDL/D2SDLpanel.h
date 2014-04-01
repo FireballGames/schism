@@ -5,7 +5,7 @@
 #include "D2SDLgraph.h"
 #include "D2SDLsurface.h"
 
-class D2SDLpanel : private D2SDLcomponent
+class D2SDLpanel : public D2SDLcomponent
 {
     public:
         D2SDLpanel();
@@ -17,7 +17,6 @@ class D2SDLpanel : private D2SDLcomponent
 
         D2SDLcomponent* parent;   // Parent panel
         D2SDLcomponent* children; // Children panel
-        D2SDLcomponent* next;     // Next panel
 
         int x; // Panel top
         int y; // Panel left

@@ -1,5 +1,7 @@
 #include "D2SDLsurface.h"
 
+const int ERROR_NO_SURFACE = -1;
+
 D2SDLsurface::D2SDLsurface()
 {
     surface = NULL;
@@ -7,7 +9,10 @@ D2SDLsurface::D2SDLsurface()
 
 D2SDLsurface::~D2SDLsurface()
 {
-    //dtor
+    printf("Free surface\n");
+
+    if(surface)
+        SDL_FreeSurface(surface);
 }
 
 /**
@@ -24,16 +29,6 @@ int D2SDLsurface::init(int w, int h)
 }
 
 /**
- * Freeing image from SDL
- * @return errorcode
- */
-int D2SDLsurface::free()
-{
-    SDL_FreeSurface(surface);
-    return 0;
-}
-
-/**
  * Painting image
  * @param D2SDLgraph graph Main graphical object
  * @return errorcode
@@ -42,15 +37,12 @@ int D2SDLsurface::paint(D2SDLgraph* graph)
 {
     int errorcode = 0;
 
-    if(!surface)
-        return -1;
+    if(!surface) return ERROR_NO_SURFACE;
 
     errorcode = SDL_BlitSurface(surface, NULL, graph->surface, NULL);
 
     if (errorcode<0)
-    {
         printf("%s\n", SDL_GetError());
-    }
 
     return errorcode;
 }

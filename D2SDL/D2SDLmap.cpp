@@ -36,8 +36,8 @@ int D2SDLmap::initialize() {
         }
     }
 
-    tiles = new D2SDLimage(map_tiles);
-    obj   = new D2SDLimage("images/terrain/stolb.png");
+    tiles = new D2SDLimage_old(map_tiles);
+    obj   = new D2SDLimage_old("images/terrain/stolb.png");
     printf("Map tiles loaded\n");
 
     return 0;

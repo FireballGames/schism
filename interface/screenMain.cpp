@@ -4,7 +4,7 @@ const char* MAIN_LOGO_FILENAME = "images/background.bmp";
 
 screenMain::screenMain(D2SDLgraph* graph)
 {
-    this->graph = graph;
+    setGraph(graph);
 
     m = new map;
     x = 128;
@@ -80,10 +80,10 @@ void screenMain::on_paint()
 {
     bigmap->generateMap(x, y, m);
     //graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
-    bigmap->show(0, 0, screen->image);
+    bigmap->show(0, 0, surface->surface);
 
     minimap->generateMap(-1, -1, m);
     minimap->setViewpoint(x,y);
-    minimap->show(528, 0, screen->image);
+    minimap->show(528, 0, surface->surface);
 }
 

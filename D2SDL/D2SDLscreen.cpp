@@ -7,9 +7,11 @@ const int BASIC_MAX_FPS = 500;
 
 D2SDLscreen::D2SDLscreen()
 {
-    graph       = NULL;
-    screen      = NULL;
+    //graph       = NULL;
+    //image       = NULL;
+    surface     = new D2SDLimage();//NULL;
     cursor      = NULL;
+
     loaded      = 0;
     show_cursor = 1;
     repaint     = true;
@@ -23,36 +25,35 @@ D2SDLscreen::D2SDLscreen()
 D2SDLscreen::D2SDLscreen(D2SDLgraph* graph)
 {
     D2SDLscreen();
-    this->graph = graph;
+    setGraph(graph);
 }
 
 D2SDLscreen::~D2SDLscreen()
 {
-    screen->free();
+    //if(surface) delete surface;
 }
 
 int D2SDLscreen::loadImage(const char* filename)
 {
     printf("Loading %s\n", filename);
 
-    screen = new D2SDLimage(filename);
-    loaded = (screen != false);
+    init(graph->width, graph->height);
+
+    D2SDLimage* img = (D2SDLimage*) surface;
+    img->load(filename);
+
+    loaded = (img == false);
 
     return loaded ? 0 : -1;
 }
 
 int D2SDLscreen::show()
 {
-    int res = 0;
-
-    if(!loaded && logo_filename){
-        res = loadImage(logo_filename);
-        if(res<0) return res;
-    }
+    int errorcode = 0;
 
     SDL_ShowCursor(show_cursor);
 
-    showing = (res==0);
+    showing = (errorcode==0);
     repaint = true;
 
     while(showing)
@@ -82,9 +83,7 @@ int D2SDLscreen::show()
 
         on_loop();
 
-        /*
-         * Counting FPS
-         */
+        // Counting FPS
         if(timer_fps->is_started() && (timer_fps->get_ticks() < 1000))
         {
             frame++;
@@ -95,41 +94,42 @@ int D2SDLscreen::show()
             timer_fps->start();
         }
 
-        /*
-         * Painting
-         */
+        // Painting
         repaint =true;
         if(repaint && (frame < fps))
         {
-            res = paint();
-            if(res<0) return res;
+            errorcode = paint();
+            if(errorcode<0) return errorcode;
+
+            moveMouse();
+
+            errorcode = graph->flip();
+            if(errorcode<0) return errorcode;
         }
 
-        /*
-         * Quiting
-         */
+        // Quiting
         if(graph->stopped)
         {
             showing = false;
-            res = 1;
+            errorcode = 1;
         }
     }
 
-    return res;
+    return errorcode;
 }
 
+/*
 int D2SDLscreen::paint()
 {
     int res = 0;
 
-    if(screen){
-        if(!screen->image)
+    if(image){
+        if(!image->image)
             printf("No screen\n");
-        int res = SDL_BlitSurface(screen->image, NULL, graph->surface, NULL);
+        int res = SDL_BlitSurface(image->image, NULL, graph->surface, NULL);
         if (res<0) {
             printf("%s\n", SDL_GetError());
         }
-        moveMouse();
     }
     if(res<0) return res;
 
@@ -142,6 +142,7 @@ int D2SDLscreen::paint()
 
     return res;
 }
+*/
 
 void D2SDLscreen::on_loop() {
 }
@@ -172,4 +173,10 @@ void D2SDLscreen::moveMouse() {
 
         SDL_BlitSurface(cursor->image->image,  NULL, graph->surface, &offset);
     }
+}
+
+void D2SDLscreen::setGraph(D2SDLgraph* graph)
+{
+    this->graph = graph;
+    init(this->graph->width, this->graph->height);
 }

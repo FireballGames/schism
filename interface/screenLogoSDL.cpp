@@ -3,7 +3,7 @@
 const char* SDL_LOGO_FILENAME = "images/logo_sdl.bmp";
 
 screenLogoSDL::screenLogoSDL(D2SDLgraph* graph){
-    this->graph = graph;
+    setGraph(graph);
 
     delay         = 2000;
     show_cursor   = 0;

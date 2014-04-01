@@ -20,7 +20,7 @@ mapBig::~mapBig()
 }
 
 SDL_Surface* mapBig::screen() {
-    D2SDLimage* img = new D2SDLimage("images/logo_sdl.bmp"); //"images/background.bmp"
+    D2SDLimage_old* img = new D2SDLimage_old("images/logo_sdl.bmp"); //"images/background.bmp"
 
     return img->image;
 }

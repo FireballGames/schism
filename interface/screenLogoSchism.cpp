@@ -3,7 +3,7 @@
 const char* SCHISM_LOGO_FILENAME = "images/logo_schism.bmp";
 
 screenLogoSchism::screenLogoSchism(D2SDLgraph* graph) {
-    this->graph = graph;
+    setGraph(graph);
 
     show_cursor   = 0;
 

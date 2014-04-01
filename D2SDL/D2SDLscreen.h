@@ -1,20 +1,22 @@
 #ifndef D2SDLSCREEN_H
 #define D2SDLSCREEN_H
 
+#include "D2SDLpanel.h"
 #include "D2SDLgraph.h"
 #include "D2SDLimage.h"
 #include "D2SDLcursor.h"
 #include "D2SDLtimer.h"
 
-class D2SDLscreen
+class D2SDLscreen : public D2SDLpanel
 {
     public:
         D2SDLscreen();
         D2SDLscreen(D2SDLgraph* graph);
         virtual ~D2SDLscreen();
 
-        D2SDLgraph*  graph;
-        D2SDLimage*  screen;
+        //D2SDLgraph*  graph;
+        //D2SDLimage*  image;
+
         D2SDLcursor* cursor;
 
         int   fps;
@@ -25,8 +27,9 @@ class D2SDLscreen
 
         int loadImage(const char* filename);
         int show();
-        virtual int paint();
+        //virtual int paint();
         void moveMouse();
+        void setGraph(D2SDLgraph* graph);
 
         virtual void on_loop();
         virtual void on_paint();

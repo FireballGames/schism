@@ -7,6 +7,9 @@ class D2SDLcomponent
     public:
         D2SDLcomponent();
         virtual ~D2SDLcomponent();
+
+        D2SDLcomponent* next; // Next panel
+        int paint();
     protected:
     private:
 };

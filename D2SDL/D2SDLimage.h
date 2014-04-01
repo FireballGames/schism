@@ -1,26 +1,17 @@
-/*
- * File:   D2SDLimage.h
- * Author: d2emon
- *
- * Created on 25 Январь 2014 г., 0:03
- */
-
 #ifndef D2SDLIMAGE_H
-#define	D2SDLIMAGE_H
+#define D2SDLIMAGE_H
 
-#include <SDL/SDL.h>
+#include "D2SDLsurface.h"
 
-class D2SDLimage {
-public:
-    SDL_Surface* image;
-    D2SDLimage(const char* filename, int color_key = 1);
-    D2SDLimage(const D2SDLimage& orig);
-    virtual ~D2SDLimage();
-    SDL_Surface* load(const char* filename, int color_key = 1);
-    int free();
-private:
 
+class D2SDLimage : public D2SDLsurface
+{
+    public:
+        D2SDLimage();
+        virtual ~D2SDLimage();
+        SDL_Surface* load(const char* filename, int color_key = 1);
+    protected:
+    private:
 };
 
-#endif	/* D2SDLIMAGE_H */
-
+#endif // D2SDLIMAGE_H

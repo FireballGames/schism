@@ -23,7 +23,7 @@ mapMini::~mapMini()
 }
 
 SDL_Surface* mapMini::screen() {
-    D2SDLimage* img = new D2SDLimage(MINIMAP_BACKGROUND);
+    D2SDLimage_old* img = new D2SDLimage_old(MINIMAP_BACKGROUND);
 
     return img->image;
 }
@@ -36,9 +36,9 @@ int mapMini::setViewpoint(int x, int y) {
     offset.x = px;
     offset.y = py;
 
-    D2SDLimage* src = NULL;
+    D2SDLimage_old* src = NULL;
 
-    src = new D2SDLimage(IMG_USERLOC);
+    src = new D2SDLimage_old(IMG_USERLOC);
     SDL_BlitSurface(src->image, NULL, image, &offset);
     src->free();
 

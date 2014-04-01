@@ -8,7 +8,7 @@
 #ifndef SDLGRAPH_H
 #define	SDLGRAPH_H
 
-#include "D2SDLimage.h"
+#include "D2SDLimage_old.h"
 #include "D2SDLminimap.h"
 
 #include <SDL/SDL.h>

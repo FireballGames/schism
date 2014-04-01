@@ -13,8 +13,7 @@ screenLogo::screenLogo()
 screenLogo::screenLogo(D2SDLgraph* graph)
 {
     screenLogo();
-
-    this->graph = graph;
+    setGraph(graph);
 }
 
 screenLogo::~screenLogo()

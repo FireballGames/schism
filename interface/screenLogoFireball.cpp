@@ -5,7 +5,7 @@
 const char* FIREBALL_LOGO_FILENAME = "images/logo_fireball.bmp";
 
 screenLogoFireball::screenLogoFireball(D2SDLgraph* graph) {
-    this->graph = graph;
+    setGraph(graph);
 
     loadImage(FIREBALL_LOGO_FILENAME);
 }

@@ -6,11 +6,11 @@
  */
 
 #include "D2SDLminimap.h"
-#include "D2SDLimage.h"
+#include "D2SDLimage_old.h"
 
 D2SDLminimap::D2SDLminimap() {
     image = NULL;
-    terrain_small = NULL;
+    // terrain_small = NULL;
 }
 
 D2SDLminimap::D2SDLminimap(const D2SDLminimap& orig) {
@@ -20,7 +20,7 @@ D2SDLminimap::~D2SDLminimap() {
 }
 
 int D2SDLminimap::initialize() {
-    D2SDLimage* img = new D2SDLimage("images/minimap.png");
+    D2SDLimage_old* img = new D2SDLimage_old("images/minimap.png");
     image = img->image;
     if(!image) {
         return -1;
@@ -41,15 +41,15 @@ int D2SDLminimap::initialize() {
         }
     }
 
-    terrain       = new D2SDLimage("images/terrain/terrain.png");
-    terrain_small = new D2SDLimage("images/terrain/terrain_small.png");
+    // terrain       = new D2SDLimage_old("images/terrain/terrain.png");
+    // terrain_small = new D2SDLimage_old("images/terrain/terrain_small.png");
 
     return 0;
 }
 
 int D2SDLminimap::finalize() {
-    SDL_FreeSurface(terrain->image);
-    SDL_FreeSurface(terrain_small->image);
+    // SDL_FreeSurface(terrain->image);
+    // SDL_FreeSurface(terrain_small->image);
     SDL_FreeSurface(image);
 
     return 0;
@@ -71,7 +71,7 @@ int D2SDLminimap::fill(int x, int y, int id, SDL_Rect* clip = NULL)
     offset.x = x1;
     offset.y = y1;
 
-    SDL_BlitSurface(terrain_small->image, clip, image, &offset);
+    // SDL_BlitSurface(terrain_small->image, clip, image, &offset);
 
     return 0;
 }
@@ -82,7 +82,7 @@ int D2SDLminimap::fillBig(int x, int y, int id, SDL_Surface* screen, SDL_Rect* c
     offset.x = x;
     offset.y = y;
 
-    SDL_BlitSurface(terrain->image, clip, screen, &offset);
+    // SDL_BlitSurface(terrain->image, clip, screen, &offset);
 
     return 0;
 }

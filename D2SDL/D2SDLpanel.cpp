@@ -3,7 +3,7 @@
 D2SDLpanel::D2SDLpanel()
 {
     graph   = NULL;
-    surface = NULL;
+    surface = new D2SDLsurface;
 
     parent   = NULL;
     children = NULL;
@@ -26,7 +26,8 @@ D2SDLpanel::D2SDLpanel(D2SDLgraph* graph)
 
 D2SDLpanel::~D2SDLpanel()
 {
-    surface->free();
+    if(surface)
+        delete surface;
 }
 
 /**
@@ -57,34 +58,34 @@ int D2SDLpanel::paint()
 
     if(surface){
         errorcode = surface->paint(graph);
+        on_paint();
+
         //moveMouse();
     }
 
-    if(errorcode) return errorcode;
-
-    on_paint();
-
-    return graph->flip();
+    return errorcode;
 }
 
+/**
+ * Painting children panels
+ * @return int errorcode
+ */
 int D2SDLpanel::paint_children()
 {
     int errorcode = 0;
 
-    //D2SDLpanel* child = children;
+    D2SDLcomponent* child = children;
 
-    /*
     if(child)
     {
         errorcode = child->paint();
-        if(errorode) return errorcode;
+        if(errorcode) return errorcode;
         while(child->next && (!errorcode))
         {
             child = child->next;
-            child->paint();
+            errorcode = child->paint();
         }
     }
-    */
 
     return errorcode;
 }

@@ -2,7 +2,7 @@
 #define D2SDLMAP_H
 
 #include <SDL/SDL.h>
-#include "D2SDLimage.h"
+#include "D2SDLimage_old.h"
 #include "../map.h"
 
 const int terr_types  =  4;
@@ -24,8 +24,8 @@ class D2SDLmap
 
         SDL_Surface* image;
         SDL_Surface* background;
-        D2SDLimage* tiles;
-        D2SDLimage* obj;
+        D2SDLimage_old* tiles;
+        D2SDLimage_old* obj;
 
         D2SDLmap();
         virtual ~D2SDLmap();

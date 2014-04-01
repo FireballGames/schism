@@ -13,7 +13,7 @@ D2SDLcursor::~D2SDLcursor()
 
 int D2SDLcursor::load(const char* filename)
 {
-    image = new D2SDLimage(filename, 1);
+    image = new D2SDLimage_old(filename, 1);
 
     return 0;
 }

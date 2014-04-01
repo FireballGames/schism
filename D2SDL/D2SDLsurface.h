@@ -14,7 +14,6 @@ class D2SDLsurface
         SDL_Surface* surface; // Surface
 
         int init(int w, int h);
-        int free();
         int paint(D2SDLgraph* graph);
     protected:
     private:

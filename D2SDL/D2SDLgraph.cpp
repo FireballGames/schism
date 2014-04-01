@@ -10,7 +10,7 @@
 #include <SDL/SDL_image.h>
 
 #include "D2SDLgraph.h"
-#include "D2SDLimage.h"
+#include "D2SDLimage_old.h"
 #include "D2SDLminimap.h"
 
 const int SCREEN_WIDTH_LOW   =  800;
@@ -129,7 +129,7 @@ int D2SDLgraph::fillImage(SDL_Surface* dest, int x, int y, const char* filename,
     offset.x = x;
     offset.y = y;
 
-    D2SDLimage* src = new D2SDLimage(filename, 0);
+    D2SDLimage_old* src = new D2SDLimage_old(filename, 0);
     SDL_BlitSurface(src->image, NULL, dest, &offset);
     src->free();
 
