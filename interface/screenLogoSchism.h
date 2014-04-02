@@ -9,6 +9,7 @@ class screenLogoSchism : public D2SDLscreen
     public:
         screenLogoSchism(D2SDLgraph* graph);
         virtual ~screenLogoSchism();
+        //virtual int loadImage(const char* filename);
         //virtual int on_loop();
         virtual void on_mouseButtonDown(SDL_Event event);
         virtual void on_keyDown(SDL_Event event);

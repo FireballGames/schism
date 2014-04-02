@@ -13,7 +13,7 @@ screenMain::screenMain(D2SDLgraph* graph)
     bigmap  = new mapBig;
     minimap = new mapMini;
 
-    loadImage(MAIN_LOGO_FILENAME);
+    //loadImage(MAIN_LOGO_FILENAME);
 
     show_cursor = 0;
 

@@ -14,6 +14,7 @@ class screenLogo : public D2SDLscreen
         screenLogo(D2SDLgraph* graph);
         virtual ~screenLogo();
 
+        //int loadImage(const char* filename);
         virtual void on_loop();
         virtual void on_mouseButtonDown(SDL_Event event);
         virtual void on_keyDown(SDL_Event event);

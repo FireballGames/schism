@@ -3,7 +3,7 @@
 #include "D2SDLtimer.h"
 #include "D2SDLgraph.h"
 
-const int BASIC_MAX_FPS = 500;
+const int BASIC_MAX_FPS = 50;
 
 D2SDLscreen::D2SDLscreen()
 {
@@ -33,19 +33,18 @@ D2SDLscreen::~D2SDLscreen()
     //if(surface) delete surface;
 }
 
-int D2SDLscreen::loadImage(const char* filename)
+int D2SDLscreen::loadBackground(const char* filename)
 {
-    printf("Loading %s\n", filename);
+    D2SDLpanel* p   = new D2SDLpanel();
+    p->loadGraph(graph);
+    int errorcode = p->loadImage(filename);
+    add_child(p);
 
-    init(graph->width, graph->height);
+    printf("bg loaded\n");
 
-    D2SDLimage* img = (D2SDLimage*) surface;
-    img->load(filename);
-
-    loaded = (img == false);
-
-    return loaded ? 0 : -1;
+    return errorcode;
 }
+
 
 int D2SDLscreen::show()
 {
@@ -56,13 +55,15 @@ int D2SDLscreen::show()
     showing = (errorcode==0);
     repaint = true;
 
+    bool repainting = false;
+
     while(showing)
     {
         while(graph->pollEvent())
         {
             if(graph->event.type == SDL_MOUSEMOTION)
             {
-                if(cursor) repaint = true;
+                if(cursor) repainting = true;
                 on_mouseMotion(graph->event);
             }
             else if(graph->event.type == SDL_MOUSEBUTTONDOWN)
@@ -95,10 +96,10 @@ int D2SDLscreen::show()
         }
 
         // Painting
-        repaint =true;
-        if(repaint && (frame < fps))
+        repaint = true;
+        if(repainting || (frame < fps))
         {
-            errorcode = paint();
+            errorcode = paint(graph->surface);
             if(errorcode<0) return errorcode;
 
             moveMouse();
@@ -171,7 +172,7 @@ void D2SDLscreen::moveMouse() {
         offset.x = cursor->x;
         offset.y = cursor->y;
 
-        SDL_BlitSurface(cursor->image->image,  NULL, graph->surface, &offset);
+        SDL_BlitSurface(cursor->image->image,  NULL, graph->surface->surface, &offset);
     }
 }
 

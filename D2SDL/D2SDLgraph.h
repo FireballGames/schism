@@ -5,18 +5,19 @@
  * Created on 22 Январь 2014 г., 22:28
  */
 
-#ifndef SDLGRAPH_H
-#define	SDLGRAPH_H
+#ifndef D2SDLGRAPH_H
+#define	D2SDLGRAPH_H
 
-#include "D2SDLimage_old.h"
-#include "D2SDLminimap.h"
+#include "D2SDLsurface.h"
+//#include "D2SDLimage_old.h"
+//#include "D2SDLminimap.h"
 
 #include <SDL/SDL.h>
 
 class D2SDLgraph
 {
 public:
-    SDL_Surface*  surface; //Drawing surface
+    D2SDLsurface*  surface; //Drawing surface
     //D2SDLminimap* minimap;
     SDL_Event event; // Polled event
 
@@ -38,5 +39,5 @@ public:
 private:
 };
 
-#endif	/* SDLGRAPH_H */
+#endif	/* D2SDLGRAPH_H */
 

@@ -30,8 +30,10 @@ SDL_Surface* D2SDLimage::load(const char* filename, int color_key)
             Uint32 colorkey = SDL_MapRGB(surface->format, 0xFF, 0, 0xFF);
             SDL_SetColorKey(surface, SDL_SRCCOLORKEY, colorkey );
         }
-    }
 
+        width  = image->w;
+        height = image->h;
+    }
 
     return image;
 }

@@ -79,7 +79,7 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
 
                 if(loctype == 1)
                 {
-                    locstyle = (locstyle + water_modifier)%16;//
+                    locstyle = (locstyle + (water_modifier/2))%16;//
                 }
                 if(locstyle>=max_style) locstyle = locstyle % max_style;
 
@@ -155,7 +155,7 @@ int D2SDLmap::show(int x, int y, SDL_Surface* screen)
     SDL_BlitSurface(image, NULL, screen, &offset);
 
     water_modifier++;
-    if (water_modifier>=16)
+    if (water_modifier>=32)
         water_modifier = 0;
 
     return 0;

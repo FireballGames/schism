@@ -61,7 +61,8 @@ int D2SDLgraph::initialize(bool fullscreen = false, bool highres = false)
     if(highres) width  = SCREEN_WIDTH_HIGH;
     if(highres) height = SCREEN_HEIGHT_HIGH;
 
-    surface = SDL_SetVideoMode(width, height, SCREEN_BPP, mode);
+    surface = new D2SDLsurface();
+    surface->surface = SDL_SetVideoMode(width, height, SCREEN_BPP, mode);
     if(!surface) return -2;
 
     SDL_WM_SetCaption(WM_CAPTION, NULL);
@@ -112,7 +113,7 @@ int D2SDLgraph::pollEvent()
  */
 int D2SDLgraph::flip()
 {
-    return SDL_Flip(surface);
+    return SDL_Flip(surface->surface);
 }
 
 /**

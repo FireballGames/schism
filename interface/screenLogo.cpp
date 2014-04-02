@@ -21,6 +21,27 @@ screenLogo::~screenLogo()
     //dtor
 }
 
+/*
+int screenLogo::loadImage(const char* filename)
+{
+    printf("Loading %s\n", filename);
+
+    D2SDLpanel* p   = new D2SDLpanel();
+    D2SDLimage* img = new D2SDLimage();
+    img->load(filename);
+
+    p->loadGraph(graph);
+    p->surface    = img;
+    p->surface->x = (graph->width  - p->surface->width )/2;
+    p->surface->y = (graph->height - p->surface->height)/2;
+
+    add_child(p);
+
+    loaded = (img != false);
+
+    return loaded ? 0 : -1;
+}
+*/
 
 void screenLogo::on_loop() {
     if(timer->get_ticks() >= delay) {

@@ -84,7 +84,8 @@ int gameGUI::title()
     screenLogoFireball* logo1 = NULL;
     logo1 = new screenLogoFireball(graph);
     errorcode = logo1->show();
-    delete logo1;
+    //delete logo1;
+
     if(graph->stopped) return 1;
 
     /*
@@ -99,7 +100,7 @@ int gameGUI::title()
     screenLogoSDL* logo2 = NULL;
     logo2 = new screenLogoSDL(graph);
     errorcode = logo2->show();
-    delete logo2;
+    //delete logo2;
     if(graph->stopped) return 1;
 
     return errorcode;

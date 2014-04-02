@@ -18,15 +18,13 @@ class D2SDLpanel : public D2SDLcomponent
         D2SDLcomponent* parent;   // Parent panel
         D2SDLcomponent* children; // Children panel
 
-        int x; // Panel top
-        int y; // Panel left
-        int width;  // Panel width
-        int height; // Panel height
-
         bool painted; // If painted
 
         int init(int w, int h);
-        virtual int paint();
+        int loadGraph(D2SDLgraph* graph);
+        int loadImage(const char* filename);
+        int add_child(D2SDLcomponent* child);
+        virtual int paint(D2SDLsurface* new_surface);
         virtual int paint_children();
         virtual void on_paint();
     protected:

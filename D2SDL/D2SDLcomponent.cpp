@@ -7,10 +7,5 @@ D2SDLcomponent::D2SDLcomponent()
 
 D2SDLcomponent::~D2SDLcomponent()
 {
-    //dtor
-}
-
-int D2SDLcomponent::paint()
-{
-    return 0;
+    if(next) delete next;//dtor
 }

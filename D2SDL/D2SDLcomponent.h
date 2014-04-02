@@ -1,6 +1,7 @@
 #ifndef D2SDLCOMPONENT_H
 #define D2SDLCOMPONENT_H
 
+#include "D2SDLsurface.h"
 
 class D2SDLcomponent
 {
@@ -8,8 +9,10 @@ class D2SDLcomponent
         D2SDLcomponent();
         virtual ~D2SDLcomponent();
 
+        char* name;
+
         D2SDLcomponent* next; // Next panel
-        int paint();
+        virtual int paint(D2SDLsurface* new_surface) = 0;
     protected:
     private:
 };

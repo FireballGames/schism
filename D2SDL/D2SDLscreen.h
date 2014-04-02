@@ -25,7 +25,7 @@ class D2SDLscreen : public D2SDLpanel
         int   showing;
         char* logo_filename;
 
-        int loadImage(const char* filename);
+        int loadBackground(const char* filename);
         int show();
         //virtual int paint();
         void moveMouse();
