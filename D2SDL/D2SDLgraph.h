@@ -25,6 +25,9 @@ public:
     int height;   // Window height
     bool stopped; // If game is stopping
 
+    int surfaces;
+    int depth;
+
     D2SDLgraph();
     virtual ~D2SDLgraph();
 

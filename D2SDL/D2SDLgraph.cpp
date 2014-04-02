@@ -65,6 +65,9 @@ int D2SDLgraph::initialize(bool fullscreen = false, bool highres = false)
     surface->surface = SDL_SetVideoMode(width, height, SCREEN_BPP, mode);
     if(!surface) return -2;
 
+    surfaces = 1;
+    printf("Surfaces %d\n", surfaces);
+
     SDL_WM_SetCaption(WM_CAPTION, NULL);
 
     return 0;
@@ -77,6 +80,11 @@ int D2SDLgraph::initialize(bool fullscreen = false, bool highres = false)
 int D2SDLgraph::finalize()
 {
     printf("SDL finalization\n");
+
+    delete surface;
+    surfaces --;
+    printf("Surfaces %d\n", surfaces);
+
     SDL_Quit();
     return 0;
 }

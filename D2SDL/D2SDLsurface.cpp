@@ -18,6 +18,8 @@ D2SDLsurface::~D2SDLsurface()
 
     if(surface)
         SDL_FreeSurface(surface);
+
+    printf("- Surface\n");
 }
 
 /**
@@ -33,6 +35,8 @@ int D2SDLsurface::init(int w = 0, int h = 0)
 
     surface = SDL_CreateRGBSurface( 0, width, height, 32, 0, 0, 0, 0);
     //SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 0, 255));
+
+    printf("+ Surface\n");
 
     return 0;
 }

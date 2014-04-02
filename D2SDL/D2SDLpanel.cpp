@@ -24,16 +24,21 @@ D2SDLpanel::D2SDLpanel(D2SDLgraph* graph)
 
 D2SDLpanel::~D2SDLpanel()
 {
-    printf("Deleting %s\n", name);
     printf("Delete children\n");
-    /*
     if(children)
         delete children;
-    */
     printf("Delete surface\n");
     if(surface)
+    {
         delete surface;
-    printf("Deleted %s\n", name);
+
+        if(graph)
+        {
+            graph->surfaces --;
+            printf("Surfaces %d\n", graph->surfaces);
+        }
+    }
+    printf("Deleted\n");
 }
 
 /**
@@ -45,6 +50,16 @@ D2SDLpanel::~D2SDLpanel()
 int D2SDLpanel::init(int w = 0, int h = 0)
 {
     surface = new D2SDLsurface();
+
+    if(graph)
+    {
+        graph->surfaces ++;
+        printf("Surfaces %d\n", graph->surfaces);
+    }
+    else
+    {
+        printf("Orphan\n");
+    }
 
     return surface->init(w, h);
 }
@@ -83,7 +98,6 @@ int D2SDLpanel::add_child(D2SDLcomponent* child)
     if(!children)
     {
         children = child;
-        printf("Empty\n");
         return 0;
     }
 
@@ -91,7 +105,7 @@ int D2SDLpanel::add_child(D2SDLcomponent* child)
     while(c->next)
     {
         c = c->next;
-        printf("next sibling\n");
+        printf("Next sibling\n");
     }
 
     c->next = child;
@@ -112,13 +126,17 @@ int D2SDLpanel::paint(D2SDLsurface* new_surface)
 {
     int errorcode = 0;
 
-    if(surface){
-        errorcode = surface->paint(new_surface);
-        on_paint();
-        paint_children();
 
-        //moveMouse();
+    if(surface){
+        if(graph) printf("Depth %d\n", graph->depth);
+        errorcode = surface->paint(new_surface);
+        printf("Paint basic\n");
+        on_paint();
+        printf("Paint children\n");
+        paint_children();
+        printf("Paint all\n");
     }
+    printf("Paint leave\n");
 
     return errorcode;
 }
@@ -137,6 +155,7 @@ int D2SDLpanel::paint_children()
     {
         while(child && (!errorcode))
         {
+            if(graph) graph->depth++;
             errorcode = child->paint(surface);
             child     = child->next;
         }

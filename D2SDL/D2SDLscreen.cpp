@@ -40,7 +40,7 @@ int D2SDLscreen::loadBackground(const char* filename)
     int errorcode = p->loadImage(filename);
     add_child(p);
 
-    printf("bg loaded\n");
+    printf("Background loaded\n");
 
     return errorcode;
 }
@@ -56,6 +56,8 @@ int D2SDLscreen::show()
     repaint = true;
 
     bool repainting = false;
+
+    printf("Before loop\n");
 
     while(showing)
     {
@@ -84,6 +86,8 @@ int D2SDLscreen::show()
 
         on_loop();
 
+        printf("After events\n");
+
         // Counting FPS
         if(timer_fps->is_started() && (timer_fps->get_ticks() < 1000))
         {
@@ -95,17 +99,25 @@ int D2SDLscreen::show()
             timer_fps->start();
         }
 
+        printf("Frame %d\n", frame);
+
         // Painting
         repaint = true;
         if(repainting || (frame < fps))
         {
+            graph->depth = 0;
             errorcode = paint(graph->surface);
+            printf("Paint leaved\n");
             if(errorcode<0) return errorcode;
+            printf("Painted\n");
 
             moveMouse();
+            printf("Mouse\n");
 
             errorcode = graph->flip();
             if(errorcode<0) return errorcode;
+
+            printf("Flipped\n");
         }
 
         // Quiting
@@ -113,7 +125,11 @@ int D2SDLscreen::show()
         {
             showing = false;
             errorcode = 1;
+
+            printf("Quit\n");
         }
+
+        printf("Next loop\n");
     }
 
     return errorcode;
