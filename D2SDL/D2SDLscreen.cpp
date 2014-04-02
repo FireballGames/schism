@@ -57,36 +57,58 @@ int D2SDLscreen::show()
 
     bool repainting = false;
 
-    printf("Before loop\n");
-
     while(showing)
     {
         while(graph->pollEvent())
         {
+            if(cursor)
+                cursor->getPosition();
+
             if(graph->event.type == SDL_MOUSEMOTION)
             {
-                if(cursor) repainting = true;
-                on_mouseMotion(graph->event);
+                int x = 0;
+                int y = 0;
+                if(cursor)
+                {
+                    x = cursor->x;
+                    y = cursor->y;
+                    repainting = true;
+                }
+                do_mouseMotion(x, y);
             }
             else if(graph->event.type == SDL_MOUSEBUTTONDOWN)
             {
-                on_mouseButtonDown(graph->event);
+                int x = 0;
+                int y = 0;
+                if(cursor)
+                {
+                    x = cursor->x;
+                    y = cursor->y;
+                    repainting = true;
+                }
+                do_mouseButtonDown(x, y);
             }
             else if(graph->event.type == SDL_MOUSEBUTTONUP)
             {
-                on_mouseButtonUp(graph->event);
+                int x = 0;
+                int y = 0;
+                if(cursor)
+                {
+                    x = cursor->x;
+                    y = cursor->y;
+                    repainting = true;
+                }
+                do_mouseButtonUp(x, y);
             }
             else if(graph->event.type == SDL_KEYDOWN)
             {
-                on_keyDown(graph->event);
+                do_keyDown();
             }
             //else
                 // printf("Basic %d\n", graph->event.type);
         }
 
         on_loop();
-
-        printf("After events\n");
 
         // Counting FPS
         if(timer_fps->is_started() && (timer_fps->get_ticks() < 1000))
@@ -99,7 +121,9 @@ int D2SDLscreen::show()
             timer_fps->start();
         }
 
+        printf("-----\n");
         printf("Frame %d\n", frame);
+        printf("-----\n");
 
         // Painting
         repaint = true;
@@ -107,17 +131,12 @@ int D2SDLscreen::show()
         {
             graph->depth = 0;
             errorcode = paint(graph->surface);
-            printf("Paint leaved\n");
             if(errorcode<0) return errorcode;
-            printf("Painted\n");
 
             moveMouse();
-            printf("Mouse\n");
 
             errorcode = graph->flip();
             if(errorcode<0) return errorcode;
-
-            printf("Flipped\n");
         }
 
         // Quiting
@@ -128,8 +147,6 @@ int D2SDLscreen::show()
 
             printf("Quit\n");
         }
-
-        printf("Next loop\n");
     }
 
     return errorcode;
@@ -165,18 +182,6 @@ void D2SDLscreen::on_loop() {
 }
 
 void D2SDLscreen::on_paint() {
-}
-
-void D2SDLscreen::on_mouseMotion(SDL_Event event) {
-}
-
-void D2SDLscreen::on_mouseButtonDown(SDL_Event event) {
-}
-
-void D2SDLscreen::on_mouseButtonUp(SDL_Event event) {
-}
-
-void D2SDLscreen::on_keyDown(SDL_Event event) {
 }
 
 void D2SDLscreen::moveMouse() {

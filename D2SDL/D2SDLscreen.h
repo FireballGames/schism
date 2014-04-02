@@ -33,10 +33,11 @@ class D2SDLscreen : public D2SDLpanel
 
         virtual void on_loop();
         virtual void on_paint();
-        virtual void on_mouseMotion(SDL_Event event);
+        /*
         virtual void on_mouseButtonDown(SDL_Event event);
         virtual void on_mouseButtonUp(SDL_Event event);
         virtual void on_keyDown(SDL_Event event);
+        */
     protected:
         int         frame;
         D2SDLtimer* timer_fps;

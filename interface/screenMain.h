@@ -18,12 +18,13 @@ class screenMain : public D2SDLscreen
         virtual ~screenMain();
         virtual void on_loop();
         virtual void on_paint();
-        virtual void on_keyDown(SDL_Event event);
+        //virtual void on_keyDown(SDL_Event event);
+
+        int moveView(int dx, int dy);
     protected:
         mapBig*  bigmap;
         mapMini* minimap;
 
-        int moveView(int dx, int dy);
     private:
 };
 

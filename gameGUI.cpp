@@ -84,16 +84,23 @@ int gameGUI::title()
     screenLogoFireball* logo1 = NULL;
     logo1 = new screenLogoFireball(graph);
     errorcode = logo1->show();
-    printf("Show\n");
-    //delete logo1;
-
-    if(graph->stopped) return 1;
 
     /*
      * Some game preparations
      */
     cursor = new D2SDLcursor;
     cursor->load(IMG_CURSOR);
+    m = new map;
+    m->generate();
+    printf("Map generated\n");
+    /*
+    m->save("test.map");
+    // m->load("test.map");
+    printf("Map loaded\n");
+    */
+
+    delete logo1;
+    if(graph->stopped) return 1;
 
     /*
      * SDL logo screen
@@ -144,6 +151,7 @@ int gameGUI::game()
     screenMain* main_screen = NULL;
     main_screen = new screenMain(graph);
     main_screen->cursor = cursor;
+    main_screen->m      = m;
     main_screen->show();
     if(graph->stopped) return 1;
 

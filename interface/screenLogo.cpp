@@ -1,9 +1,27 @@
 #include "screenLogo.h"
 
+void logo_mouseButtonDown(D2SDLcomponent* sender, SDL_Event event) {
+    if(event.button.button == SDL_BUTTON_LEFT)
+    {
+        D2SDLscreen* logo = dynamic_cast<D2SDLscreen*>(sender);
+        if(logo)
+            logo->showing = false;
+    }
+}
+
+void logo_keyDown(D2SDLcomponent* sender, SDL_Event event) {
+    D2SDLscreen* logo = dynamic_cast<D2SDLscreen*>(sender);
+    if(logo)
+        logo->showing = false;
+}
+
 screenLogo::screenLogo()
 {
     delay       = 2000;
     show_cursor = 0;
+
+    on_mouseButtonDown = logo_mouseButtonDown;
+    on_keyDown         = logo_keyDown;
 
     timer = new D2SDLtimer();
     timer->start();
@@ -47,13 +65,4 @@ void screenLogo::on_loop() {
     if(timer->get_ticks() >= delay) {
         showing = false;
     }
-}
-
-void screenLogo::on_mouseButtonDown(SDL_Event event) {
-    if(event.button.button == SDL_BUTTON_LEFT)
-        showing = false;
-}
-
-void screenLogo::on_keyDown(SDL_Event event) {
-    showing = false;
 }

@@ -14,8 +14,6 @@ D2SDLsurface::D2SDLsurface()
 
 D2SDLsurface::~D2SDLsurface()
 {
-    printf("Free surface\n");
-
     if(surface)
         SDL_FreeSurface(surface);
 

@@ -11,8 +11,8 @@ class D2SDLcomponent
 
         char* name;
 
-        D2SDLcomponent* next; // Next panel
-        virtual int paint(D2SDLsurface* new_surface) = 0;
+        D2SDLcomponent* parent;  // Parent panel
+        D2SDLcomponent* next;    // Next panel
     protected:
     private:
 };

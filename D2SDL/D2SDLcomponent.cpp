@@ -2,11 +2,11 @@
 
 D2SDLcomponent::D2SDLcomponent()
 {
-    //ctor
+    parent = NULL;
+    next   = NULL;
 }
 
 D2SDLcomponent::~D2SDLcomponent()
 {
-    printf("Deleting next\n");
-    if(next) delete next;//dtor
+    if(next)    delete next;
 }

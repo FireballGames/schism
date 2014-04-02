@@ -38,6 +38,7 @@ public:
 private:
     D2SDLgraph*  graph;  // Game graphics
     D2SDLcursor* cursor; // Game cursor
+    map* m; // Game map
 };
 
 #endif	/* GAMEGUI_H */
