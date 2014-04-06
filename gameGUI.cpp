@@ -93,11 +93,11 @@ int gameGUI::title()
     m = new map;
     m->generate();
     printf("Map generated\n");
-    /*
-    m->save("test.map");
-    // m->load("test.map");
+
+    //m->save("test.map");
+    m->load("test.map");
     printf("Map loaded\n");
-    */
+
 
     delete logo1;
     if(graph->stopped) return 1;

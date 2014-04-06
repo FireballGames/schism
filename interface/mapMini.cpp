@@ -7,14 +7,9 @@ mapMini::mapMini()
 {
     x0 = 8; //128 + 5;
     y0 = 8; //40;
-    size_x = 256;
-    size_y = 256;
-    tile_w = 4;
-    tile_h = 2;
-    map_tiles = "images/terrain/terrain_small.png";
     max_style = 4;
 
-    pack = 4;
+    pack = 1;
 }
 
 mapMini::~mapMini()

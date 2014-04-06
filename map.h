@@ -10,8 +10,8 @@
 
 #include "location.h"
 
-const int max_x = 255;
-const int max_y = 255;
+const unsigned int max_x = 255;
+const unsigned int max_y = 255;
 
 class map {
 public:

@@ -10,8 +10,6 @@ class screenLogoSchism : public D2SDLscreen
         screenLogoSchism(D2SDLgraph* graph);
         virtual ~screenLogoSchism();
         D2SDLpanel* addButton(int x, int y, const char* filename);
-        virtual void on_mouseButtonDown(SDL_Event event);
-        //virtual void on_keyDown(SDL_Event event);
     protected:
     private:
 };

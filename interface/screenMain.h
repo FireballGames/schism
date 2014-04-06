@@ -11,8 +11,8 @@ class screenMain : public D2SDLscreen
 {
     public:
         map* m;
-        int x;
-        int y;
+        unsigned int x;
+        unsigned int y;
 
         screenMain(D2SDLgraph* graph);
         virtual ~screenMain();

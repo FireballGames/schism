@@ -200,5 +200,6 @@ void D2SDLscreen::moveMouse() {
 void D2SDLscreen::setGraph(D2SDLgraph* graph)
 {
     this->graph = graph;
+    this->graph->surfaces = 1;
     init(this->graph->width, this->graph->height);
 }
