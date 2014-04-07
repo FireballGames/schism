@@ -26,7 +26,7 @@ class D2SDLmap : public D2SDLpanel
         int pack;
 
         SDL_Surface* image;
-        SDL_Surface* background;
+        D2SDLsurface* background;
         D2SDLimage_old* tiles_old;
         D2SDLimage_old* obj_old;
 

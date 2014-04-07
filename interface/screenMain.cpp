@@ -57,8 +57,8 @@ screenMain::screenMain(D2SDLgraph* graph)
     minimap->surface->x = surface->width-(256*MINI_TILE_WIDTH) - 8;//272;
     minimap->surface->y = 8;
     add_child(minimap);
-    minimap->size_x = 256;
-    minimap->size_y = 256;
+    minimap->size_x = 512;
+    minimap->size_y = 512;
     minimap->x0 = 0;
     minimap->y0 = 0;
     minimap->loadTiles( MINI_TILE_WIDTH, MINI_TILE_HEIGHT, MINI_TILE_IMAGES);
@@ -109,9 +109,12 @@ void screenMain::on_paint()
     bigmap->generateMap(x, y, m);
     //bigmap->show(0, 0, surface->surface);
 
-    minimap->generateMap(128/2, 128/2, m);
+    minimap->generateMap(0, 0, m);
     minimap->setViewpoint(x,y);
     //minimap->show(surface->width-272, 0, surface->surface); //528
 
     //graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
+    int vx = x-y+256;
+    int vy = x+y;
+    graph->fillImage(minimap->surface->surface, vx, vy, "images/terrain/userloc.png");
 }

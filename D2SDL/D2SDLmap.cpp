@@ -34,6 +34,8 @@ int D2SDLmap::initialize()
     }
     SDL_BlitSurface(background, NULL, image, NULL);
     */
+    background = new D2SDLsurface;
+    background->init(tile_w*size_x*2, tile_h*size_y*2);
     printf("Background blitted\n");
 
 
@@ -48,9 +50,11 @@ int D2SDLmap::initialize()
     }
     printf("Rects set\n");
 
+    /*
     tiles_old = new D2SDLimage_old(map_tiles);
     obj_old   = new D2SDLimage_old("images/terrain/stolb.png");
     printf("Old tiles\n");
+    */
 
     tiles = new D2SDLimage;
     obj   = new D2SDLimage;
@@ -64,8 +68,8 @@ int D2SDLmap::initialize()
 }
 
 int D2SDLmap::finalize() {
-    SDL_FreeSurface(tiles_old->image);
-    SDL_FreeSurface(obj_old->image);
+    //SDL_FreeSurface(tiles_old->image);
+    //SDL_FreeSurface(obj_old->image);
     //SDL_FreeSurface(image);
     //SDL_FreeSurface(background);
 
@@ -96,16 +100,21 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
         return -1;
     }
     */
+    background->paint(surface);
+
+    printf("size_x %d, size_y %d\n", size_x, size_y);
 
     for(unsigned int i=0; i<size_x; i+= pack) {
         for(unsigned int j=0; j<size_y; j+= pack) {
             unsigned int lx = i + x - (size_x/2); // +
             unsigned int ly = j + y - (size_y/2); // + y - (size_y/2);
+            //printf("Searching location\n");
 
             if((lx>=0)&&(ly>=0)&&(lx<=max_x)&&(ly<=max_y)) {
                 location* loc = m->locations[lx][ly];
                 int px = isometric_x(i, j);
                 int py = isometric_y(i, j);
+                //printf("Transponing location\n");
 
                 unsigned int loctype  = loc->loctype;
                 unsigned int locstyle = loc->style;
@@ -114,9 +123,11 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
                 //Modifying water style
                 if(loctype == 1)
                 {
-                    locstyle = (locstyle + (water_modifier/2))%16;//
+                    locstyle = (locstyle + (water_modifier/8))%16;//
                 }
                 if(locstyle>=max_style) locstyle = locstyle % max_style;
+                water_modifier++;
+                if(water_modifier>256) water_modifier = 0;
 
                 //Filling map with current tile
                 fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
@@ -209,10 +220,12 @@ int D2SDLmap::show(int x, int y, SDL_Surface* screen)
 
 int D2SDLmap::isometric_x(int x, int y)
 {
-    return (x - y + size_x - 1)*(tile_w/2);// + x0; //((i - j) + (size_x - 1)) * (tile_w / 2) / pack;
+    return (x - y + size_x - 1)*(tile_w/2);
+    // + x0; //((i - j) + (size_x - 1)) * (tile_w / 2) / pack;
 }
 
 int D2SDLmap::isometric_y(int x, int y)
 {
-    return (x + y)*(tile_h/2);// + y0; //((i + j)               ) * (tile_h / 2) / pack; // - tile_h;
+    return (x + y)*(tile_h/2);
+    // + y0; //((i + j)               ) * (tile_h / 2) / pack; // - tile_h;
 }
