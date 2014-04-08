@@ -110,10 +110,10 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
             unsigned int ly = j + y - (size_y/2); // + y - (size_y/2);
             //printf("Searching location\n");
 
-            if((lx>=0)&&(ly>=0)&&(lx<=max_x)&&(ly<=max_y)) {
+            if((lx>=0)&&(ly>=0)&&(lx<max_x)&&(ly<max_y)) {
                 location* loc = m->locations[lx][ly];
-                int px = isometric_x(i, j);
-                int py = isometric_y(i, j);
+                int px = isometric_x(i, j); //*tile_w;
+                int py = isometric_y(i, j); //*tile_h;
                 //printf("Transponing location\n");
 
                 unsigned int loctype  = loc->loctype;
@@ -131,6 +131,8 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
 
                 //Filling map with current tile
                 fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
+                if((!lx)&&(!ly))
+                    printf("x0, y0: (%d, %d) (%d, %d)\n", i, j, px, py);
 
                 //Filling map with objects
                 /*

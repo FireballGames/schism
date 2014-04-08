@@ -44,8 +44,10 @@ screenMain::screenMain(D2SDLgraph* graph)
     printf("Added as child\n");
     bigmap->size_x  = size_x;
     bigmap->size_y  = size_x;
-    bigmap->x0 = -size_x*TILE_WIDTH/4; //-graph->width/2;
-    bigmap->y0 = -size_x*TILE_HEIGHT/4; // + size_x*TILE_HEIGHT/4;
+    bigmap->x0 = -(size_x+18)*TILE_WIDTH/4;//-(size_x/4+5)*TILE_WIDTH;
+    //-graph->width/2;
+    bigmap->y0 = -(size_x+18)*TILE_HEIGHT/4;//-(size_x/4)*TILE_HEIGHT;
+    // + size_x*TILE_HEIGHT/4;
 
     bigmap->loadTiles( TILE_WIDTH, TILE_HEIGHT, TILE_IMAGES);
     printf("Bigmap  %d %d\n",  bigmap->size_x,  bigmap->size_y);
@@ -57,15 +59,12 @@ screenMain::screenMain(D2SDLgraph* graph)
     minimap->surface->x = surface->width-(256*MINI_TILE_WIDTH) - 8;//272;
     minimap->surface->y = 8;
     add_child(minimap);
-    minimap->size_x = 512;
-    minimap->size_y = 512;
+    minimap->size_x = 256;
+    minimap->size_y = 256;
     minimap->x0 = 0;
     minimap->y0 = 0;
     minimap->loadTiles( MINI_TILE_WIDTH, MINI_TILE_HEIGHT, MINI_TILE_IMAGES);
     printf("Minimap %d %d\n", minimap->size_x, minimap->size_y);
-
-    //bigmap->initialize();
-    //minimap->initialize();
 }
 
 screenMain::~screenMain()
@@ -108,13 +107,15 @@ void screenMain::on_paint()
 {
     bigmap->generateMap(x, y, m);
     //bigmap->show(0, 0, surface->surface);
+    //graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
+    printf("Map generated\n");
 
-    minimap->generateMap(0, 0, m);
+    minimap->generateMap(128, 128, m);
     minimap->setViewpoint(x,y);
     //minimap->show(surface->width-272, 0, surface->surface); //528
+    printf("Minimap generated\n");
 
-    //graph->fillImage(bigmap->image, (bigmap->size_x/2)*bigmap->tile_w+bigmap->x0, (bigmap->size_y/2)*bigmap->tile_h+bigmap->y0, IMG_UNIT      , 0);
-    int vx = x-y+256;
+    int vx = x-y+255;
     int vy = x+y;
     graph->fillImage(minimap->surface->surface, vx, vy, "images/terrain/userloc.png");
 }

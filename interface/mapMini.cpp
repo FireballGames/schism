@@ -24,6 +24,7 @@ SDL_Surface* mapMini::screen() {
 }
 
 int mapMini::setViewpoint(int x, int y) {
+    /*
     int px = ((x - y) + (size_x - 1)) * (tile_w / 2) / pack + x0;
     int py = ((x + y)               ) * (tile_h / 2) / pack + y0;
 
@@ -36,6 +37,7 @@ int mapMini::setViewpoint(int x, int y) {
     src = new D2SDLimage_old(IMG_USERLOC);
     SDL_BlitSurface(src->image, NULL, image, &offset);
     src->free();
+    */
 
     return 0;
 }
