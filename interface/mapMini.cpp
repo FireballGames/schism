@@ -9,7 +9,7 @@ mapMini::mapMini()
     y0 = 8; //40;
     max_style = 4;
 
-    pack = 1;
+    pack = 2;
 }
 
 mapMini::~mapMini()
@@ -41,3 +41,17 @@ int mapMini::setViewpoint(int x, int y) {
 
     return 0;
 }
+
+int mapMini::initialize()
+{
+    D2SDLimage* image = new D2SDLimage;
+    //background->init(tile_w*size_x*2, tile_h*size_y*2);
+    image->load(MINIMAP_BACKGROUND);
+
+    background = image;
+    printf("Mini background blitted\n");
+
+    return 0;
+}
+
+

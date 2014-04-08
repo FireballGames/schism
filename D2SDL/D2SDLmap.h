@@ -36,7 +36,7 @@ class D2SDLmap : public D2SDLpanel
         D2SDLmap();
         virtual ~D2SDLmap();
 
-        int initialize();
+        virtual int initialize();
         int finalize();
         void loadTiles(unsigned int w, unsigned int h, const char* filename);
         int generateMap(int x, int y, map* m);

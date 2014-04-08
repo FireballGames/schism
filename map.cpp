@@ -22,9 +22,9 @@ map::map() {
     srand(time( NULL ));
 
     //locations = new location*[256];
-    for(int i=0; i<max_x; i++) {
+    for(unsigned int i=0; i<max_x; i++) {
         //locations[i] = new location[256];
-        for(int j=0; j<max_y; j++) {
+        for(unsigned int j=0; j<max_y; j++) {
             location* loc = new location;
             locations[i][j] = loc;
             //printf("%d:%d,", loc->loctype, loc->style);
@@ -92,9 +92,9 @@ int map::save(const char* filename)
     item_size  = sizeof(char);
     block_size = sizeof(locdata) / item_size;
 
-    for(int j=0; j<max_y; j++)
+    for(unsigned int j=0; j<max_y; j++)
     {
-        for(int i=0; i<max_x; i++)
+        for(unsigned int i=0; i<max_x; i++)
         {
             location* loc = locations[i][j];
 

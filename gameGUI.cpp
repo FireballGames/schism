@@ -94,8 +94,8 @@ int gameGUI::title()
     m->generate();
     printf("Map generated\n");
 
-    //m->save("test.map");
-    m->load("test.map");
+    m->save("test.map");
+    //m->load("test.map");
     printf("Map loaded\n");
 
 

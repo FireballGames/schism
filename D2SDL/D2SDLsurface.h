@@ -18,7 +18,7 @@ class D2SDLsurface
         int width;  // Surface width
         int height; // Surface height
 
-        int init(int w, int h);
+        int init(unsigned int w, unsigned int h, bool paint);
         int paint(D2SDLsurface* new_surface);
     protected:
     private:

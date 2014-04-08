@@ -10,6 +10,7 @@ class mapMini : public D2SDLmap
         virtual ~mapMini();
 
         int setViewpoint(int x, int y);
+        int initialize();
     protected:
         SDL_Surface* screen();
     private:

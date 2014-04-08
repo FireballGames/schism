@@ -49,7 +49,7 @@ D2SDLpanel::~D2SDLpanel()
  * @param int h Panel height
  * @return int errorcode
  */
-int D2SDLpanel::init(int w = 0, int h = 0)
+int D2SDLpanel::init(unsigned int w = 0, unsigned int h = 0, bool paint = true)
 {
     surface = new D2SDLsurface();
 
@@ -59,7 +59,7 @@ int D2SDLpanel::init(int w = 0, int h = 0)
         printf("Surfaces %d\n", graph->surfaces);
     }
 
-    return surface->init(w, h);
+    return surface->init(w, h, paint);
 }
 
 int D2SDLpanel::loadGraph(D2SDLgraph* graph)

@@ -26,43 +26,9 @@ D2SDLmap::~D2SDLmap()
 
 int D2SDLmap::initialize()
 {
-    /*
-    background = screen();
-    if(!background)
-    {
-        return -1;
-    }
-    SDL_BlitSurface(background, NULL, image, NULL);
-    */
     background = new D2SDLsurface;
-    background->init(tile_w*size_x*2, tile_h*size_y*2);
+    background->init(tile_w*size_x*2, tile_h*size_y*2, true);
     printf("Background blitted\n");
-
-
-    //Clip range for the top left
-    for(int i=0; i<terr_types; i++) {
-        for(int j=0; j<terr_kinds; j++) {
-            clip[i][j].x = j*tile_w;
-            clip[i][j].y = i*tile_h;
-            clip[i][j].w = tile_w;
-            clip[i][j].h = tile_h;
-        }
-    }
-    printf("Rects set\n");
-
-    /*
-    tiles_old = new D2SDLimage_old(map_tiles);
-    obj_old   = new D2SDLimage_old("images/terrain/stolb.png");
-    printf("Old tiles\n");
-    */
-
-    tiles = new D2SDLimage;
-    obj   = new D2SDLimage;
-    tiles->load(map_tiles);
-    obj->load("images/terrain/stolb.png");
-    printf("New tiles\n");
-
-    printf("Map tiles loaded\n");
 
     return 0;
 }
@@ -78,19 +44,34 @@ int D2SDLmap::finalize() {
 
 void D2SDLmap::loadTiles(unsigned int w, unsigned int h, const char* filename)
 {
-    tile_w = w; //100;
-    tile_h = h; // 50;
+    printf("Loading tiles %d, %d, %s\n", w, h, filename);
 
-    map_tiles = new char[strlen(filename)];
-    map_tiles = strcpy(map_tiles, filename);
-
-    //x0 = 0; //-tile_w*(size_x+1)/2;
-    //y0 = 0; //-tile_h*(size_y+1)/2;
-    printf("Size is set\n");
+    tile_w = w;
+    tile_h = h;
+    printf("Size is set (%d, %d)\n", tile_w, tile_h);
 
     initialize();
-
     printf("Map initialized\n");
+
+    //Clip range for the top left
+    for(int i=0; i<terr_types; i++) {
+        for(int j=0; j<terr_kinds; j++) {
+            clip[i][j].x = j*tile_w;
+            clip[i][j].y = i*tile_h;
+            clip[i][j].w = tile_w;
+            clip[i][j].h = tile_h;
+        }
+    }
+    printf("Rects set\n");
+
+    tiles = new D2SDLimage;
+    tiles->load(filename);
+    printf("New tiles\n");
+    obj   = new D2SDLimage;
+    obj->load("images/terrain/stolb.png");
+    printf("New objs\n");
+
+    printf("Map tiles loaded\n");
 }
 
 int D2SDLmap::generateMap(int x, int y, map* m) {
@@ -131,8 +112,6 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
 
                 //Filling map with current tile
                 fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
-                if((!lx)&&(!ly))
-                    printf("x0, y0: (%d, %d) (%d, %d)\n", i, j, px, py);
 
                 //Filling map with objects
                 /*
@@ -222,12 +201,12 @@ int D2SDLmap::show(int x, int y, SDL_Surface* screen)
 
 int D2SDLmap::isometric_x(int x, int y)
 {
-    return (x - y + size_x - 1)*(tile_w/2);
+    return (x - y + size_x - 1)*tile_w/(2*pack);
     // + x0; //((i - j) + (size_x - 1)) * (tile_w / 2) / pack;
 }
 
 int D2SDLmap::isometric_y(int x, int y)
 {
-    return (x + y)*(tile_h/2);
+    return (x + y)*tile_h/(2*pack);
     // + y0; //((i + j)               ) * (tile_h / 2) / pack; // - tile_h;
 }

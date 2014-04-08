@@ -17,9 +17,7 @@ class D2SDLpanel : public D2SDLcomponent
 
         D2SDLcomponent* children; // Children panel
 
-        bool painted; // If painted
-
-        int init(int w, int h);
+        int init(unsigned int w, unsigned int h, bool paint);
         int loadGraph(D2SDLgraph* graph);
         int loadImage(const char* filename);
         int add_child(D2SDLcomponent* child);

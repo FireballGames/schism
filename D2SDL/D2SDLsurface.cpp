@@ -26,14 +26,20 @@ D2SDLsurface::~D2SDLsurface()
  * @param int h Surface height
  * @return int errorcode
  */
-int D2SDLsurface::init(int w = 0, int h = 0)
+int D2SDLsurface::init(unsigned int w = 0, unsigned int h = 0, bool paint = true)
 {
     if(w) width  = w;
     if(h) height = h;
 
     surface = SDL_CreateRGBSurface( 0, width, height, 32, 0, 0, 0, 0);
-    //SDL_FillRect(surface, NULL, SDL_MapRGB(surface->format, 255, 0, 255));
 
+    if(!paint)
+    {
+        Uint32 colorkey = SDL_MapRGB(surface->format, 0xFF, 0, 0xFF);
+        SDL_FillRect(   surface, NULL,            colorkey );
+        SDL_SetColorKey(surface, SDL_SRCCOLORKEY, colorkey );
+
+    }
     printf("+ Surface\n");
 
     return 0;

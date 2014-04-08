@@ -63,7 +63,7 @@ D2SDLpanel* screenLogoSchism::addButton(int x, int y, const char* filename)
 
     D2SDLpanel* p   = new D2SDLpanel();
     p->loadGraph(graph);
-    p->init(10, 10);
+    p->init(10, 10, true);
     p->loadImage(filename);
     p->surface->x = c->surface->x + x;
     p->surface->y = c->surface->y + y;
