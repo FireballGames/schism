@@ -44,6 +44,13 @@ void finalize(int errorcode = 0, int res = 0)
         res       = ERROR_RESULT;
     }
 
+    for(char i=0; i<=255; i++)
+    {
+        printf("%s, ", i);
+    }
+    printf("\n");
+
+
     if(res<0)
     {
         switch(errorcode)

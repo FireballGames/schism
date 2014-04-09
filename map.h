@@ -24,7 +24,7 @@ public:
     int save(const char* filename);
     int load(const char* filename);
 private:
-    int flow(int x, int y, int terr_type, int iterations);
+    int flow(unsigned int x, unsigned int y, int terr_type, int iterations);
     int can_flow(int x, int y, int terr_type);
 };
 

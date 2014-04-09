@@ -131,9 +131,9 @@ int map::load(const char* filename)
     item_size  = sizeof(char);
     block_size = sizeof(locdata) / item_size;
 
-    for(int j=0; j<max_y; j++)
+    for(unsigned int j=0; j<max_y; j++)
     {
-        for(int i=0; i<max_x; i++)
+        for(unsigned int i=0; i<max_x; i++)
         {
             fread(locdata, item_size, block_size, f);
 
@@ -149,7 +149,7 @@ int map::load(const char* filename)
     return 0;
 }
 
-int map::flow(int x, int y, int terr_type, int iterations) {
+int map::flow(unsigned int x, unsigned int y, int terr_type, int iterations) {
   if(can_flow(x, y, terr_type) && (iterations > 0)) {
     if((y > 0) && ((rand() % 2) > 0)) {
         int can_go = (locations[x][y-1]->loctype == 0);
