@@ -59,7 +59,7 @@ screenMain::screenMain(D2SDLgraph* graph)
     unsigned int mini_height = max_y * MINI_TILE_HEIGHT / minimap->pack;
     unsigned int border_width  = 10;
     unsigned int border_height = 10;
-    minimap->init(mini_width + (border_width*2), mini_height + border_height*2, true);
+    minimap->init(mini_width + (border_width*2), mini_height + border_height*2, false);
     //p->loadImage(filename);
     printf("Surface  %d %d\n", surface->width - minimap->surface->width - 8, surface->height);
     printf("Minimap  %d %d\n", mini_width,     mini_height    );

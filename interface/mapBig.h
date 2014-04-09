@@ -11,9 +11,11 @@ class mapBig : public D2SDLmap
         mapBig();
         virtual ~mapBig();
     protected:
-        SDL_Surface* screen();
+        unsigned int water_modifier;
+        SDL_Rect getClip(location* loc);
     private:
         SDL_Surface* game_screen;
+        D2SDLtimer* timer_water;
 };
 
 #endif // MAPBIG_H

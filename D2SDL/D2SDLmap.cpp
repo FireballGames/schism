@@ -14,7 +14,6 @@ D2SDLmap::D2SDLmap()
     tile_w = 1;
     tile_h = 1;
 
-    water_modifier = 0;
     max_style      = 16;
     objects        = 0;
 }
@@ -97,21 +96,10 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
                 int py = isometric_y(i, j); //*tile_h;
                 //printf("Transponing location\n");
 
-                unsigned int loctype  = loc->loctype;
-                unsigned int locstyle = loc->style;
-                //unsigned int locobj   = loc->object;
-
-                //Modifying water style
-                if(loctype == 1)
-                {
-                    locstyle = (locstyle + (water_modifier/8))%16;//
-                }
-                if(locstyle>=max_style) locstyle = locstyle % max_style;
-                water_modifier++;
-                if(water_modifier>256) water_modifier = 0;
+                SDL_Rect current_clip = getClip(loc);
 
                 //Filling map with current tile
-                fillMap(px, py, loc->loctype, &clip[loc->loctype][locstyle]);
+                fillMap(px, py, loc->loctype, &current_clip);
 
                 //Filling map with objects
                 /*
@@ -132,6 +120,25 @@ int D2SDLmap::generateMap(int x, int y, map* m) {
     }
 
     return 0;
+}
+
+SDL_Rect D2SDLmap::getClip(location* l)
+{
+    unsigned int loctype  = l->loctype;
+    unsigned int locstyle = l->style;
+    //unsigned int locobj   = loc->object;
+
+    //Modifying water style
+    /*
+    if(loctype == 1)
+    {
+        locstyle = (locstyle + (water_modifier/8))%16;//
+    }
+    if(locstyle>=max_style) locstyle = locstyle % max_style;
+    water_modifier++;
+    if(water_modifier>256) water_modifier = 0;
+    */
+    return clip[loctype][locstyle];
 }
 
 /**

@@ -44,11 +44,11 @@ class D2SDLmap : public D2SDLpanel
         //int fillObj(int x, int y);
         //int show(int x, int y, SDL_Surface* screen);
     protected:
-        char water_modifier;
         char* map_tiles;
         SDL_Rect clip[terr_types][terr_kinds];
 
-        virtual SDL_Surface* screen() = 0;
+        virtual SDL_Rect getClip(location* loc);
+        //virtual SDL_Surface* screen() = 0;
     private:
         int isometric_x(int x, int y);
         int isometric_y(int x, int y);
