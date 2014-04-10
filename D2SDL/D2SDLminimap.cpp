@@ -64,12 +64,14 @@ int D2SDLminimap::finalize() {
  */
 int D2SDLminimap::fill(int x, int y, int id, SDL_Rect* clip = NULL)
 {
+    /*
     int x1 = (2 * (x - y) ) + 128 + 5;
     int y1 = y + x + 40;
 
     SDL_Rect offset;
     offset.x = x1;
     offset.y = y1;
+    */
 
     // SDL_BlitSurface(terrain_small->image, clip, image, &offset);
 
@@ -78,9 +80,11 @@ int D2SDLminimap::fill(int x, int y, int id, SDL_Rect* clip = NULL)
 
 int D2SDLminimap::fillBig(int x, int y, int id, SDL_Surface* screen, SDL_Rect* clip = NULL)
 {
+    /*
     SDL_Rect offset;
     offset.x = x;
     offset.y = y;
+    */
 
     // SDL_BlitSurface(terrain->image, clip, screen, &offset);
 
