@@ -35,7 +35,7 @@ SDL_Rect mapBig::getClip(location* l)
         }
     }
 
-    if((timer_water->is_started())&&(timer_water->get_ticks() > 40))
+    if((timer_water->is_started())&&(timer_water->get_ticks() > 100))
     {
         water_modifier++;
         if(water_modifier >= max_style)

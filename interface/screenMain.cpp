@@ -121,7 +121,7 @@ void screenMain::on_paint()
     minimap->generateMap(128, 128, m);
     printf("Minimap generated\n");
 
-    int vx = (x-y)/(minimap->pack * minimap->tile_h) + (minimap->surface->width)/2;
+    int vx = (x-y)/(minimap->pack * minimap->tile_h) + (minimap->surface->width)/2 + 5;
     int vy = (x+y)/(minimap->pack * minimap->tile_w) + minimap->y0;
     //minimap->setViewpoint(x,y);
     graph->fillImage(minimap->surface->surface, vx, vy, "images/terrain/userloc.png");
